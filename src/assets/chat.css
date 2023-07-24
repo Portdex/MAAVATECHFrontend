@@ -1,0 +1,133 @@
+.chatcontainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+  .chat-sidebar
+  {
+    /* background: linear-gradient(to right, #8364e2, #764dd3); */
+    background-color: #8364e2;
+    /* background-image: url('./img/back3.png'); */
+    background-size: cover;
+    color:white;
+    max-width: 300px;
+    width:260px
+  }
+  .sidebar
+  {
+  
+    
+      background-color: #8364e2;
+      color:white;
+      max-width: 260px;
+      width:260px
+    
+  }
+  .bg-purple
+  {
+    background-color: #8364e2;
+  }
+  .chat {
+    display: flex;
+    flex-direction: column;
+    height:100vh;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+   
+  }
+  .newchat img
+  {
+    /* border-bottom:1px solid lightgray; */
+    width: 155px;
+    filter:grayscale(1) invert(1)
+  }
+  .chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    /* overflow-y: auto; */
+    padding-bottom:100px
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .user {
+    background-color: #f0f0f0;
+  }
+  
+  .ai {
+    background-color: #d9edff;
+  }
+  .chat-fixed{
+    position: fixed;
+    bottom:0;
+    width: -webkit-fill-available;
+    background: white !important;
+  }
+  .chat-fixed>p {
+    text-align: center !important;
+  }
+  
+  .chat-form {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    width:-webkit-fill-available;
+  }
+  
+  .chat-form input {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 8px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+  }
+  
+  .chat-form button {
+    padding: 8px 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    background-color: #8364e2;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .chat-form button:hover {
+    background-color: #444444;
+  }
+  .height-contain
+  {
+    height:90vh;
+    overflow-y: auto;
+  }
+  .newchat a {
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: cursive;
+  }
+  @media (max-width: 768px) {
+   .chat-sidebar
+   {
+    display:none;
+   }
+   .height-contain {
+    height: 88vh !important;
+  }
+  .chat-messages
+  {
+    padding-bottom:40px;
+  }
+}
+  @media (max-width: 1015px) {
+    .chat-sidebar
+    {
+     width:230px;
+    }
+   }

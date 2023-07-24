@@ -1,0 +1,60 @@
+.App {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #f1f1f1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  margin-left: 260px; /* Set the same width as the sidebar */
+}
+
+.bottom-content {
+  position: fixed;
+  bottom: 0;
+  left: 260px; /* Match the sidebar width */
+  width: calc(100% - 260px); /* Adjust width to account for sidebar */
+  background-color: #f1f1f1;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+.mob-sidebar
+{
+  display:none;
+
+}
+input {
+  flex: 1;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 5px 10px;
+}
+@media (max-width: 895px) {
+  .sidebar
+  {
+    display :none;
+
+  }
+  .mob-sidebar
+  {
+    display : block ;
+    position :fixed;
+    top:0;
+    width:100%;
+
+  }
+}
