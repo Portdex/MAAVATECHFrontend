@@ -7,6 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux'
 import store from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap-country-select/dist/react-bootstrap-country-select.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import './assets/style.scss';
 const root = ReactDOM.createRoot(document.getElementById('root'));

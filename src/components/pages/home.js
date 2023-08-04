@@ -4,7 +4,8 @@ import '../../assets/chat.css'
 import { useNavigate, } from "react-router-dom";
 import styled, { createGlobalStyle } from 'styled-components';
 import Sidebars from '../menu/sidebar';
-
+import { LocalCharity , LocalSchools , items } from '../data/data';
+import Footer from '../menu/footer';
 const fadeInUp = keyframes`
   0% {
     opacity: 0;
@@ -49,142 +50,37 @@ const Home= () => {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState('Local Schools');
-  const [selectedTimeline, setselectedTimeline] = useState('School Timeline');
 const [showAll, setShowAll] = useState(false);
 const [showAllProduct, setShowAllProduct] = useState(false);
   const [visibleItems, setVisibleItems] = useState(5);
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
-  const [showNotification, setShowNotification] = useState(true);
-
-  useEffect(() => {
-    // Set a timer to hide the notification after 50-60 seconds
-    const notificationTimer = setTimeout(() => {
-      setShowNotification(false);
-    }, 50000);
-
-    // Clear the timer when the component unmounts to avoid memory leaks
-    return () => clearTimeout(notificationTimer);
-  }, []);
-
-  // Function to close the notification manually if needed
-  const handleCloseNotification = () => {
-    setShowNotification(false);
+   const handleCategory = (category) => {
+    localStorage.setItem("category", category);
+    navigate('/category');
   };
-
-  const items = [
-    'School Admissions',
-    'College Admissions',
-    'University Admissions',
-    'College Events',
-    'Tuitions',
-    'Freelance Tutors',
-    'Uniform shops',
-    'Book Sellers',
-    'Used book sellers',
-  ];
-   // Add your items here
-
-  const LocalSchools = [
-    {
-      name: 'Local Schools',
-      image: '/img/localschool.jpg'
-    },
-    {
-      name: 'Local Colleges',
-      image: '/img/localcollege.jpg'
-    },
-    {
-      name: 'Education Events',
-      image: '/img/events.jpg'
-    },
-    {
-      name: 'Used Books',
-      image: '/img/books.jpg'
-    },
-    {
-        name: 'Used Uniforms',
-        image: '/img/uniform.jpg'
-      },
-    // {
-    //   name: 'Handmade Product',
-    //   image: './img/handmade_product_image.jpg'
-    // },
-    // {
-    //   name: 'Toys Product',
-    //   image: './img/toys_product_image.jpg'
-    // },
-    // {
-    //   name: 'Digital Product',
-    //   image: './img/digital_product_image.jpg'
-    // },
-    // {
-    //   name: 'Physical Product',
-    //   image: './img/physical_product_image.jpg'
-    // },
-    // {
-    //   name: 'Toys Product',
-    //   image: './img/toys_product_image.jpg'
-    // },
-    // {
-    //   name: 'Pet Product',
-    //   image: './img/pet_product_image.jpg'
-    // }
-  ];
-  
-  const LocalCharity = [
-    {
-      name: 'Support an Orphan',
-      image: './img/orphan.jpg'
-    },
-    {
-      name: 'Homeless Child Food',
-      image: './img/food.jpg'
-    },
-    {
-      name: 'Blood Donations',
-      image: './img/blood.jpg'
-    },
-    {
-      name: 'Needy Students',
-      image: './img/needy.jpg'
-    },
-    
-  ];
-  const handleDigitalProduct =() =>{
-localStorage.setItem("value" , "digital")
-navigate('/category')
-  }
-  const handlePhysicalProduct =() =>{
-    localStorage.setItem("value" , "physical")
-    navigate('/category')
-      }
-  const handleMarketplace =() =>{
-    localStorage.setItem("value" , "marketplace")
-    navigate('/category')
-          }
-  const handleFreelancers =() =>{
-    localStorage.setItem("value" , "freelancer")
-    navigate('/category')
-              }
-  const handleAccountant =() =>{
-    localStorage.setItem("value" , "accountant")
-    navigate('/category')
-                  }
- const handleLawyer =() =>{
-    localStorage.setItem("value" , "lawyer")
-    navigate('/category') 
-   }
   const itemHandlers = {
-    Freelancers: handleFreelancers,
-    Accountant: handleAccountant,
-    Lawyer: handleLawyer,
+    Schools: () => handleCategory("School"),
+    Colleges: () => handleCategory("College"),
+    University: () => handleCategory("University"),
+    Tuition: () => handleCategory("Tuition"),
+    Tutor: () => handleCategory("Tutor"),
+    Book: () => handleCategory("Book"),
+    UsedBook: () => handleCategory("UsedBook"),
+    Events: () => handleCategory("Events"),
+    Consultant: () => handleCategory("Consultant"),
+    Uniform: () => handleCategory("Uniform"),
+    Orphan: () => handleCategory("Orphan"),
+    Homeless: () => handleCategory("Homeless"),
+    Blood: () => handleCategory("Blood"),
+    Students: () => handleCategory("Students"),
+    
     // Add more item handlers if needed
   };
 
   const handleItemClick = (item) => {
-    const handler = itemHandlers[item];
+    const handler = itemHandlers[item.label];
     if (handler) {
       handler();
     }
@@ -217,49 +113,29 @@ navigate('/category')
       <div className="chat">
         <div className="height-contain">
          
-      <h5 className='text-center mt-3 pt-3 pb-3 color-purple'>
-      {/* Portdex.ai will Port & connect you for free.  <br/> */}
-      Search & Connect in real Time. 
-        </h5>
+      <h5 className='text-center mt-3 pt-3 pb-3 color-red margin-top-responsive'>
+      
+      Maavatech is All in One Solution for Education Sector- 
+        </h5> 
         <div className="chat-messages justify-content-center">
           <div className="services-list mb-4 ">
-          <div className="row">
-              <div className="services-tabs">
-                <ul>
-                  <li>
-                    <a className={`p-0 ${selectedTimeline === 'School Timeline' ? 'activeServices' : ''}`} onClick={() => setselectedTimeline('School Timeline')}>
-                    School Timeline
-                    </a>
-                  </li>
-                  <li>
-                    <a className={`p-0 ${selectedTimeline === 'Charity Timeline' ? 'activeServices' : ''}`} onClick={() => setselectedTimeline('Charity Timeline')}>
-                   Charity Timeline
-                    </a>
-                  </li>
-                  <li>
-                    <a className={`p-0 ${selectedTimeline === 'Admission' ? 'activeServices' : ''}`} onClick={() => setselectedTimeline('Admission')}>
-                  Admission Consultants
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          
             <ul className='desktop-view'>
              {items.map((item, index) => (
           <li key={index} onClick={() => handleItemClick(item)}>
-            {item}
+            {item.name}
           </li>
         ))}
             </ul>
             <ul className='mobile-view'>
         {items.slice(0, showAll ? items.length : visibleItems).map((item, index) => (
           <li key={index} onClick={() => handleItemClick(item)}>
-            {item}
+            {item.name}
           </li>
         ))}
       </ul>
-      {!showAll && <button className='mobile-view more-btn' onClick={handleSeeMore}>See More <i class="fa fa-angle-down"></i> </button>}
-      {showAll && <button className='mobile-view more-btn' onClick={handleClose}>Close <i class="fa fa-angle-up"></i> </button>}
+      {!showAll && <button className='mobile-view more-btn' onClick={handleSeeMore}>See More <i className="fa fa-angle-down"></i> </button>}
+      {showAll && <button className='mobile-view more-btn' onClick={handleClose}>Close <i className="fa fa-angle-up"></i> </button>}
           
           </div> 
           <div className="row">
@@ -275,6 +151,7 @@ navigate('/category')
                     Support Local Charity Cause
                     </a>
                   </li>
+                 
                 </ul>
               </div>
             </div>
@@ -284,9 +161,9 @@ navigate('/category')
             <>
              {LocalSchools.map((item, index) => (
           <li className='col-md-3' key={index} onClick={() => handleItemClick(item.name)}>
-           <a href='/products' className='seller-img' style={{ backgroundImage: `url(${item.image})` }}>
+           <a href='' className='seller-img' style={{ backgroundImage: `url(${item.image})` }}>
            </a>
-           <a href='/products'>
+           <a href=''>
             {item.name}
            </a>
           </li>
@@ -296,12 +173,26 @@ navigate('/category')
              {selectedOption === 'Local Charity' && (
           <>
           {LocalCharity.map((item, index) => (
-       <li className='col-md-3' key={index} onClick={() => handleItemClick(item.name)}>
+       <li className='col-md-3 mt-3' key={index}>
           <a className='seller-img' style={{ backgroundImage: `url(${item.image})` }}>
            </a>
            <a>
             {item.name}
            </a>
+           <div className='row'>
+            <div className='col-6 support-buttons'>
+            <a className='cursor-pointer' onClick={() => handleItemClick(item)}>
+              Support
+             </a>
+            </div>
+            <div className='col-6 support-buttons'>
+            <a href="/RaiseFund">
+              Raise Funds
+             </a>
+            </div>
+
+           </div>
+           
        </li>
      ))}
          </>
@@ -313,11 +204,12 @@ navigate('/category')
             <>
            {LocalSchools.slice(0, showAllProduct ? LocalSchools.length : visibleItems).map((item, index) => (
           <li className='col-6' key={index} onClick={() => handleItemClick(item.name)}>
-            <a href='/products' className='seller-img' style={{ backgroundImage: `url(${item.image})` }}>
+            <a href='' className='seller-img' style={{ backgroundImage: `url(${item.image})` }}>
            </a>
-           <a href='/products'>
+           <a href=''>
             {item.name}
            </a>
+           
           </li>
         ))}
             </>
@@ -325,12 +217,25 @@ navigate('/category')
              {selectedOption === 'Local Charity' && (
           <>
         {LocalCharity.slice(0, showAllProduct ? LocalCharity.length : visibleItems).map((item, index) => (
-          <li className='col-6' key={index} onClick={() => handleItemClick(item.name)}>
+          <li className='col-6 mt-4 responsive-margin' key={index}>
              <a className='seller-img' style={{ backgroundImage: `url(${item.image})` }}>
            </a>
            <a>
             {item.name}
            </a>
+           <div className='row'>
+            <div className='col-6 support-buttons'>
+             <a  className='cursor-pointer' onClick={() => handleItemClick(item)}>
+              Support
+             </a>
+            </div>
+            <div className='col-6 support-buttons'>
+            <a href="/RaiseFund">
+              Raise Fund
+             </a>
+            </div>
+
+           </div>
           </li>
         ))}
          </>
@@ -338,47 +243,14 @@ navigate('/category')
             </ul>
           
            <button className='border-none'> </button>
-      {/* {showAllProduct && <button className='pt-4 mobile-view more-btn' onClick={handleCloseProduct}>Close <i class="fa fa-angle-up"></i> </button>} */}
+      {/* {showAllProduct && <button className='pt-4 mobile-view more-btn' onClick={handleCloseProduct}>Close <i className="fa fa-angle-up"></i> </button>} */}
           
-            {/* {!showAllProduct && <button className='pt-4 mobile-view more-btn' onClick={handleSeeMoreProduct}>See More <i class="fa fa-angle-down"></i> </button>}
-      {showAllProduct && <button className='pt-4 mobile-view more-btn' onClick={handleCloseProduct}>Close <i class="fa fa-angle-up"></i> </button>}
+            {/* {!showAllProduct && <button className='pt-4 mobile-view more-btn' onClick={handleSeeMoreProduct}>See More <i className="fa fa-angle-down"></i> </button>}
+      {showAllProduct && <button className='pt-4 mobile-view more-btn' onClick={handleCloseProduct}>Close <i className="fa fa-angle-up"></i> </button>}
            */}
             </div>
            
-             {/* <div className="col-lg-4 col-md-4 col-12 text-center">
-              <h6>
-             Service  provider
-              </h6>
-              
-              <div className="row d-flex">
-                <div className="col-lg-12 col-6">
-                <div className="gray-boxes " onClick={handleFreelancers}>
-                <p>
-                Freelancers
-                </p>
-              </div>
-                </div>
-                <div className="col-lg-12 col-6">
-                <div className="gray-boxes" onClick={handleAccountant}>
-                <p>
-                  Accountant
-                </p>
-              </div>
-                </div>
-             
-
-              <div className="col-lg-12 col-6">
-              <div className="gray-boxes" onClick={handleLawyer}>
-                <p>
-                  Lawyers
-                </p>
-              </div>
-              </div>
-
-              </div>
-
-            </div> */}
-            
+          
         </div>
         
         </div>
