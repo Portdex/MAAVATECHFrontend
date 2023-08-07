@@ -7,6 +7,7 @@ import {
   useMatch,
   useResolvedPath
 } from "react-router-dom";
+import CheckLocation from '../components/CheckLocation';
 const GlobalStyles = createGlobalStyle`
 .navbar {
   display: none;
@@ -198,7 +199,9 @@ const Sidebars = () => {
               </a>
             </li>
           </ul>
+          <CheckLocation/>
         </div>
+
         </div>
     <Header className="navbarHome">
       <GlobalStyles/>

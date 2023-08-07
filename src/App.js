@@ -10,6 +10,7 @@ import RaiseFunds from './components/pages/RaiseFund';
 import Homework from './components/pages/Homework';
 import ScratchJrComponent from './components/pages/Scratchjr';
 import Main from './components/pages/main';
+import CheckLocation from './components/components/CheckLocation';
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -27,7 +28,7 @@ const App=()=> (
       <Route path="/admissionForm" element={<Forms />} />
       <Route path="/RaiseFund" element={<RaiseFunds />} />
       <Route path="/homework" element={<Homework />} />
-      <Route path="/scratch" element={<ScratchJrComponent />} />
+      <Route path="/check" element={<CheckLocation />} />
       <Route element={<Details />} path="/seller/:username" />
       </Routes>
      </div>

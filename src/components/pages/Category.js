@@ -17,6 +17,7 @@ import {
 import Categorycommunity from '../components/categorycommunity';
 import CountrySelect from 'react-bootstrap-country-select';
 import { Form } from 'react-bootstrap';
+import axios from 'axios';
 const GlobalStyles = createGlobalStyle`
 `;
 
@@ -90,7 +91,25 @@ const Category= () => {
   const handlePopupPhoneNumberChange = (event) => {
     setPopupPhoneNumber(event.target.value);
   };
+  const sendPopupMessage = () => {
+    // Call the Twilio API via your server to send the message
+    axios.post('http://localhost:5000/api/send-message', {
+      name: popupName,
+      phoneNumber: popupPhoneNumber,
+      message: inputValue,
+    })
+      .then((response) => {
+        console.log('Message sent successfully!');
+        console.log(response.data);
+        // Add any success message or actions you want to perform after the message is sent
+      })
+      .catch((error) => {
+        console.error('Error sending message:', error);
+        // Handle the error or show an error message to the user
+      });
 
+    closePopup(); // Close the popup after sending the message
+  };
 
   const navigate = useNavigate();
   const handleInputChange = (event) => {
@@ -363,7 +382,7 @@ const schools = selectedCountry
             onChange={handleInputChange}
             placeholder="Type your message..."
           />
-          <button type="submit" onClick={handleButtonClick}>Next</button>
+          <button type="button" onClick={openPopup}>Next</button>
           <br/>
           <div>
           
@@ -395,11 +414,11 @@ const schools = selectedCountry
             onChange={handlePopupPhoneNumberChange}
           />
           <div>
-{/* {popupName && popupPhoneNumber ?
+{popupName && popupPhoneNumber ?
             <PopupButton onClick={sendPopupMessage}>Done</PopupButton>
-            : */}
+            :
             <PopupButton disabled className='disabled'>Done</PopupButton>
-          {/* } */}
+           } 
             <PopupButton onClick={closePopup}>Cancel</PopupButton>
           </div>
         </PopupContainer>
