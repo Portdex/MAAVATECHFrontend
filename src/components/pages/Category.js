@@ -399,7 +399,7 @@ const schools = selectedCountry
      
     </div>
     {isPopupOpen && (
-        <PopupContainer>
+        <PopupContainer className='popup-responsive'>
           <h3>Send Message</h3>
           <PopupInput
             type="text"

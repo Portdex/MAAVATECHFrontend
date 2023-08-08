@@ -755,6 +755,12 @@ ul.desktop-view.row .row {
     .community-card:hover .long-cards {
       background-color: white !important;
     }
+    @media (max-width:600px)
+{
+  .popup-responsive{
+    width:80%;
+  }
+}
   @media only screen and (max-width: 895px) {
   .responsive-blink
   {
