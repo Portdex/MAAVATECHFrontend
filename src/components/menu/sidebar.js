@@ -7,6 +7,7 @@ import {
   useMatch,
   useResolvedPath
 } from "react-router-dom";
+import CheckLocation from '../components/CheckLocation';
 const GlobalStyles = createGlobalStyle`
 .navbar {
   display: none;
@@ -166,24 +167,52 @@ const Sidebars = () => {
 
         <div className="bottom-tabs">
           <ul>
-            <li className='color-gold'>
+          <li className='color-gold'>
               <a href=''>
-                  Register Yourself
+              maava orphan schools
+
               </a>
             </li>
-           
+            <li className='color-gold'>
+              <a href=''>
+              technology training
+              </a>
+            </li>
+          <li className='color-gold'>
+              <a href='/homework'>
+              School Homework
+              </a>
+            </li>
+            <li className='color-gold'>
+              <a href='https://ed.maavatech.com/web/login'>
+                 School Portal
+              </a>
+            </li>
+            <li className='color-gold'>
+              <a href=''>
+              School Timeline
+              </a>
+            </li>
+            <li className='color-gold'>
+              <a href=''>
+             Charity Timeline
+              </a>
+            </li>
           </ul>
+          <CheckLocation/>
         </div>
+
         </div>
     <Header className="navbarHome">
       <GlobalStyles/>
    <div className='navbar-title navbar-item'>
                 <NavLink to="">
-                <img
+                {/* <img
                     src="/img/code_logo.png"
                     className="img-fluid d-block"
                     alt="#"
-                  />
+                  /> */}
+                  MaavaTech
                 </NavLink>
               </div>
               {showmenu && 
@@ -199,9 +228,35 @@ const Sidebars = () => {
 
         <div className="bottom-tabs">
           <ul>
+          <li className='color-gold'>
+              <a href=''>
+              maava orphan schools
+
+              </a>
+            </li>
             <li className='color-gold'>
               <a href=''>
-               Register yourself
+              technology training
+              </a>
+            </li>
+          <li className='color-gold'>
+              <a href='/homework'>
+              School Homework
+              </a>
+            </li>
+            <li className='color-gold'>
+              <a href='https://ed.maavatech.com/web/login'>
+              School Portal
+              </a>
+            </li>
+            <li className='color-gold'>
+              <a href=''>
+              School Timeline
+              </a>
+            </li>
+            <li className='color-gold'>
+              <a href=''>
+             Charity Timeline
               </a>
             </li>
             
