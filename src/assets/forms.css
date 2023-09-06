@@ -1,0 +1,71 @@
+/* Add this CSS to your stylesheets or as a CSS-in-JS solution */
+
+/* Styling for the step indicators */
+.step-indicator {
+    width: 30px;
+    height: 30px;
+    background-color: #ccc; /* Default color */
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .step-indicator.active {
+    background-color: #007bff; /* Blue color for active step */
+    color: #fff;
+  }
+  
+  /* Styling for the form container */
+ .admissionform {
+    width: 70%;
+    margin: 0 auto;
+  }
+  
+  /* Styling for each step */
+  .admissionform > div {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .admissionform > div h2 {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .admissionform > div input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .admissionform > div button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Styling for the submit button */
+  .admissionform > div:last-child {
+    text-align: center;
+  }
+  
+  /* Show the currently active step */
+  .admissionform > div:nth-child(2n + 1) {
+    display: block;
+  }
+  

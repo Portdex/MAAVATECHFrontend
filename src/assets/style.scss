@@ -11,6 +11,13 @@
 {
   margin-top:-10px
 }
+.logo
+{
+  color: #8364e2;
+  font-size: 25px;
+  font-family: cursive;
+  font-weight: bolder;
+}
 .onStep {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -76,7 +83,8 @@
 }
 .margin-left-sidebar
 {
-  margin-left:260px
+  // margin-left:260px;
+  // margin-top:50px
 }
 @media (max-width: 457px) {
   .responsive-margin
@@ -99,7 +107,8 @@
     }
     .margin-top-responsive
     {
-      margin-top: 50px !important;
+      margin-top: 30px !important;
+      padding: 50px;
     }
     .bottom-tabs
     {
@@ -153,12 +162,14 @@ section .small-border {
   position: absolute;
 }
 .fa {
+  font-size: 23px !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
   font-size: inherit;
   text-rendering: auto;
+  cursor: pointer;
 }
 .fa-check:before {
   content: "\f00c";
@@ -529,6 +540,7 @@ ul.mobile-view.row > li > a:nth-child(2){
     font-weight:500;
     color:white;
     text-decoration: none;
+    font-size:initial;
   }
   .bottom-tabs li:hover
   {
@@ -601,10 +613,11 @@ ul.mobile-view.row > li > a:nth-child(2){
     box-shadow: 0 0 2.4em rgba(25,0,58,.1);
     color: #1f003b;
     cursor: pointer;
-    transition: .3s;
+    transition: .7s;
 }
 .community-card:hover {
-  background: linear-gradient(#6045ea,#8567f7);
+ background: #403f83;
+      transition: .7s;
   color: #fff;
 }
 .community-card .img-container {
@@ -636,11 +649,11 @@ ul.mobile-view.row > li > a:nth-child(2){
   text-transform: uppercase;
 }
 .community-icons {
-  display: flex;
-  justify-content: space-around;
-  margin: auto;
-  min-width: 180px;
-  width: 50%;
+  // display: flex;
+  // justify-content: space-around;
+  // margin: auto;
+  // min-width: 180px;
+  width: 100%;
 }
 .button-boxes {
   margin-bottom: 16px;
@@ -864,4 +877,234 @@ ul.desktop-view.row .row {
     height: 4em !important;
     padding:4px !important;
   }
+}
+.font-size-dynamic
+{
+  font-size:17px !important
+}
+.width-dynamic
+{
+  width:600px
+}
+.price-width
+{
+  width: 200px;
+    text-align: center;
+}
+.react-datepicker-wrapper
+{
+  width:100%;
+  margin-bottom: 35px;
+}
+.react-datepicker__input-container input
+{
+ border: solid 1px #cccccc;
+ border-radius: 6px;
+}
+.breadcumb {
+  border-radius: 0;
+  margin: 0;
+  padding: 0 0;
+  background-size: cover;
+  width: 100%;
+  position: relative;
+}
+.breadcumb .mainbreadcumb {
+  padding: 130px 0 110px;
+}
+.spacer-10 {
+  width: 100%;
+  height: 10px;
+  display: block;
+  clear: both;
+}
+.breadcumb .mainbreadcumb h1 {
+  margin-bottom: 0;
+  color: #fff;
+}
+.breadcumb .mainbreadcumb p {
+  color: #fff;
+  margin-top: 15px;
+}
+
+element.style {
+}
+.breadcumb .mainbreadcumb p {
+    color: #fff;
+    margin-top: 15px;
+}
+p.lead {
+    font-size: 18px;
+    line-height: 1.7em;
+    margin-top: 0;
+    font-weight: 400;
+}
+@media (min-width: 992px)
+{
+  .offset-lg-2 {
+    margin-left: 16.66666667%;
+}
+}
+.box-login {
+  padding: 40px;
+  background: #fff;
+  border-radius: 5px;
+}
+.box-login p {
+  color: #727272 !important;
+}
+.box-login p span {
+  color: #8364E2;
+  text-decoration: none;
+  cursor: pointer;
+}
+.form-control {
+  padding: 8px;
+  margin-bottom: 20px;
+  border: none;
+  border: solid 1px #cccccc;
+  background: none;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  height: auto;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  color: #333;
+}
+.btn-main:hover{
+  color: #fff !important;
+  background: #8364E2;
+}
+.btn-main {
+  display: block;
+  width: max-content;
+  text-align: center;
+  color: #fff !important;
+  background: #8364E2;
+  border-radius: 6px;
+  letter-spacing: normal;
+  outline: 0;
+
+  text-decoration: none;
+  padding: 8px 40px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 2px 20px 0px rgba(131, 100, 226, 0);
+  transition: all 0.3s ease;
+}
+.clearfix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+.spacer-single {
+  width: 100%;
+  height: 30px;
+  display: block;
+  clear: both;
+}
+.box-login .list.s3 {
+  justify-content: left;
+  font-size: 1rem;
+}
+.breadcumb .mainbreadcumb .list {
+  position: relative;
+  bottom: -20px;
+  display: flex;
+  justify-content: right;
+  font-size: 0.86rem;
+  font-weight: 400;
+  letter-spacing: 4px;
+}
+.list.s3 {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.box-login .list.s3 li {
+  display: inline;
+  margin-right: 20px;
+  letter-spacing: normal;
+  justify-content: left;
+}
+.list.s3 li {
+  display: inline;
+  list-style: none;
+  margin-right: 20px;
+}
+.list.s3 li span {
+  color: #8364E2;
+  font-weight: 600;
+  cursor: pointer;
+}
+.spacer-half {
+  width: 100%;
+  height: 15px;
+  display: block;
+  clear: both;
+}
+.navbar-top
+{
+  position: fixed;
+    top: 0;
+    z-index: 9999;
+    background-color: #8364e2;
+    height: 50px;
+}
+.user-icon
+{
+  display: inline-block;
+  float: right;
+  right: 40px;
+  position: absolute;
+}
+.dropdown-toggle::after
+{
+  color:white
+}
+.white-icon
+{
+  color:white
+}
+.color-black a
+{
+ color:black
+}
+.dropdown-item:hover
+{
+  background-color: #8364e2 !important;
+  color: white !important;
+} 
+.bottom-tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.tabbar {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 5px; /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: lightgray; /* Set the color of the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8364e2; /* Set the color of the scrollbar thumb on hover */
 }

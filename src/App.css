@@ -1,6 +1,6 @@
 .App {
-  display: flex;
-  height: 100vh;
+  display:block;
+    height:auto;
 }
 
 .sidebar {
@@ -16,7 +16,8 @@
   flex: 1;
   padding: 20px;
   background-color: #fff;
-  margin-left: 260px; /* Set the same width as the sidebar */
+  /* margin-left: 260px; Set the same width as the sidebar */
+  margin-bottom:80px
 }
 
 .bottom-content {
@@ -58,3 +59,6 @@ button {
 
   }
 }
+::-webkit-scrollbar {
+  display:none /* You can adjust the width to your preference */
+ }

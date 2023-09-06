@@ -1,0 +1,209 @@
+/* App.css */
+
+/* Reset some default styles */
+body, ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  /* Define the main container */
+  .app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-bottom: 60px;
+  }
+  
+  /* Top Navbar */
+  .top-navbar {
+    /* background-color: #333;
+    color: #fff; */
+    padding: 10px 20px;
+    box-shadow: 0 0 50px #ccc;
+
+  }
+  
+  .top-navbar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+  
+  .left-section {
+    display: flex;
+    align-items: center;
+  }
+  .right-section {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
+  .slider
+  {
+    margin-top: 33px;
+
+  }
+  .menu-button {
+    font-size: 15px;
+    background: transparent;
+    border: none;
+    /* color: #fff; */
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  /* Style the top navbar menu for horizontal scrolling */
+  .top-navbar-menu {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 20px; /* Adjust the spacing between menu items */
+    margin-top: 10px; /* Add margin to separate it from the user info */
+    padding-top: 10px ;
+  }
+  
+  .menu-item {
+    padding: 5px 10px;
+    /* background-color: #555; */
+    border-radius: 5px;
+    /* color: #fff; */
+    cursor: pointer;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 300px;
+    background-color: #333;
+    color: #fff;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -300px;
+    transition: left 0.3s ease-in-out;
+  }
+  
+  .sidebar.open {
+    left: 0;
+  }
+  
+  .menu-list {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px;
+  }
+  
+  /* .menu-item {
+    margin-bottom: 10px;
+  }
+   */
+  /* Bottom Navbar */
+  .bottom-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 0 50px #ccc;
+    color:#8a8aa2;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index:99;
+  }
+  
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size:12px
+  }
+  
+  .bottom-nav-item img {
+    width: 24px;
+    height: 24px;
+  }
+  button.slick-arrow.slick-next {
+    display: none !important;
+}
+.slide img
+{
+    width:90%;
+    object-fit:cover;
+    height:330px;
+    border-radius:50px
+}
+.headline-segment
+{
+  padding: 20px 0;
+}
+.headline-image img
+{
+  width:100%;
+  border-radius: 12px;
+}
+.headline-image
+{
+  padding:0;
+}
+.headline-text h4
+{
+  font-size: 14px;
+    line-height: 20px;
+}
+.category-tag
+{
+  color: #fc4721;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.category-tag i {
+  margin: 0 12px;
+  color: #777;
+  font-size: 5px;
+  vertical-align: middle;
+}
+.date {
+  font-size: 11px;
+  color: #999;
+}
+.headline-row
+{
+  background-color: #f1f1ff;
+  border-radius: 12px;
+  padding:10px;
+  margin-bottom: 10px;
+}
+::-webkit-scrollbar {
+  width: 0.5em; /* You can adjust the width to your preference */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Make the thumb (the draggable part) transparent */
+}
+
+  /* ImageSlider.css */
+  
+  /* Media Query for responsive design */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 250px;
+    }
+  }
+  
