@@ -78,7 +78,7 @@ const Login = ({
               <div className="col-lg-5 offset-lg-2 wow fadeIn" data-wow-delay=".5s">
                 <div className="box-login">
                   <h3 className="mb10">Sign In</h3>
-                  <p>Login using an existing account or create a new account <span> <a href='/register'> here </a> </span>.</p>
+                  <p>Login using an existing account or create a new account <span> <a href='/signup'> here </a> </span>.</p>
                   <Formik
                    validationSchema={schema}
                    onSubmit={e => onLogin()}
