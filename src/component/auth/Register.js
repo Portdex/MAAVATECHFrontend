@@ -18,6 +18,7 @@ import { Auth } from "aws-amplify";
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { signup } from '../../actions/auth'
+import 'react-phone-number-input/style.css'
 const GlobalStyles = createGlobalStyle`
   header#myHeader.navbar.sticky.white {
     background: #403f83;
