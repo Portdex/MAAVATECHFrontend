@@ -75,26 +75,36 @@ const navigate = useNavigate()
 
       {/* Bottom Navbar */}
       <div className="bottom-navbar">
+      <a href="/">
         <div className="bottom-nav-item">
-        <i className="fas fa-home"></i>
-          <span>Home</span>
+          <i className="fas fa-home"></i>
+          <span>Home</span> 
         </div>
+        </a>
+        <a href=''>
         <div className="bottom-nav-item">
         <i className="fas fa-fire"></i>
           <span>School Timeline</span>
         </div>
+        </a>
+        <a href="">
         <div className="bottom-nav-item">
         <i className="fas fa-bookmark"></i>
           <span>Charity Timeline</span>
         </div>
+        </a>
+        <a href="">
         <div className="bottom-nav-item">
         <i className="fas fa-search"></i>
           <span>Support Orphan</span>
         </div>
+        </a>
+        <a href='/profile'>
         <div className="bottom-nav-item">
         <i className="fas fa-user"></i>
           <span>Profile</span>
         </div>
+        </a>
       </div>
     </>
   );

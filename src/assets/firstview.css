@@ -124,6 +124,10 @@ body, ul, li {
     width: 100%;
     z-index:99;
   }
+  .bottom-navbar a
+  {
+    color: #8a8aa2;
+  }
   
   .bottom-nav-item {
     display: flex;
