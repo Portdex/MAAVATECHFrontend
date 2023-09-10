@@ -24,16 +24,10 @@ const Signup = () => {
           email: email,
           name: name,
           phone_number: phone,
-        },
-        autoSignIn: { 
-          enabled: true,
-      }
-      });
-    //   addToast('Account Registration Success!', {
-    //     appearance: 'success',
-    //     autoDismiss: true,
-    //   })
-      navigate('/confirmation')
+        }        
+      });      
+      window.cognitoUser = await Auth.signIn(email);      
+      navigate('/confirmation')      
     } catch (error) {
     //   addToast(error.message, {
     //     appearance: 'error',
