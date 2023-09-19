@@ -18,6 +18,7 @@ const Packages = () =>
   const [userData, setUserData] = useState([])
   const [loading , setLoading]= useState(false)
   const [storeData, setstoreData] = useState([])
+  const [error, setError] = useState(null);
   console.log('category',storeData)
   useEffect(() => {
     // Retrieve data from local storage
@@ -35,8 +36,25 @@ const Packages = () =>
       const product = Colleges.find((product) => product.name === username);
       setUserData(product);
     } else if (storeData === "School") {
-      const product = Schools.find((product) => product.name === username);
-      setUserData(product);
+      fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Assuming the response is in JSON format
+      })
+      .then(data => {
+        data=data.data;
+        // Update the state with the fetched data
+        setUserData(data.find((product) => product.name === username));
+        setLoading(false);
+      })
+      .catch(err => {
+        // Handle errors
+        setError(err);
+        setLoading(false);
+      });
+     
     } else if (storeData === "University") {
       const product = Universities.find((product) => product.name === username);
       setUserData(product);
@@ -96,7 +114,7 @@ const Packages = () =>
          {/* <ColumnNewRedux shuffle showLoadMore={false}/> */} 
          {userData.packages ?
          <div className="row">
-         {userData.packages.map((pkg, index) => (
+         {userData.packages?.map((pkg, index) => (
           <div key={index} className="col-lg-4 col-md-6 p-3">
         <div className="package-box-services">
           <div className="row d-flex justify-content-center mb-4">

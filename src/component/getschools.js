@@ -47,8 +47,9 @@ header
 
 
 
-const Details = ({ authorId }) => {
+const Schools = ({ authorId }) => {
   const { username } = useParams();
+  console.log(username)
   const [inputValue, setInputValue] = useState('');
   const [userData, setUserData] = useState([])
   const [storeData, setstoreData] = useState([])
@@ -63,7 +64,29 @@ const [openMenu2, setOpenMenu2] = React.useState(true);
 const [openMenu3, setOpenMenu3] = React.useState(false);
  const navigate = useNavigate();
  const [schools, setSchools] = useState([]);
+ console.log(schools)
  const [error, setError] = useState(null);
+//  useEffect(() => {
+//   // Fetch data from the API when the component mounts
+//   fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools")
+//     .then(response => {
+//       if (!response.ok) {
+//         throw new Error("Network response was not ok");
+//       }
+//       return response.json(); // Assuming the response is in JSON format
+//     })
+//     .then(data => {
+//       data=data.data;
+//       // Update the state with the fetched data
+//       setSchools(data.find((product) => product.name === username));
+//       setLoading(false);
+//     })
+//     .catch(err => {
+//       // Handle errors
+//       setError(err);
+//       setLoading(false);
+//     });
+// }, [storeData,username]); // Empty dependency array to run the effect only once
 
     useEffect(() => {
       // Retrieve data from local storage
@@ -134,24 +157,8 @@ const [openMenu3, setOpenMenu3] = React.useState(false);
         setUserData(product);
       }
       else if (storeData === "Orphan") {
-        fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json(); // Assuming the response is in JSON format
-        })
-        .then(data => {
-          data=data.data;
-          // Update the state with the fetched data
-          setUserData(data.find((product) => product.name === username));
-          setLoading(false);
-        })
-        .catch(err => {
-          // Handle errors
-          setError(err);
-          setLoading(false);
-        });
+        const product = Orphans.find((product) => product.name === username);
+        setUserData(product);
       }
       else if (storeData === "Blood") {
         const product = Orphans.find((product) => product.name === username);
@@ -291,48 +298,14 @@ return (
       {openMenu &&  (  
         <>
         <div id='zero1' className='onStep fadeIn'>
-         {userData.city ?
-         <>
-         <h6>
-          City: 
-         </h6>
-         <p>
-          {userData.city}
-         </p>
-         
-          {userData.address ?
-          <>
-          <h6> Address: </h6>
-          <p>{userData.address}</p>
-          </>
-          :
-          <></>}
-          {userData.rating ?
-          <>
-          <h6>
-          Ratings
-        </h6>
-        <p>
-          {userData.rating}
-        </p>
-        </> 
-        :
-        <></> }
-          </>
-          :
-          <h6>
-            Details are not available right now
-          </h6>
-         }
+         {/* <ColumnNewRedux shuffle showLoadMore={false} authorId={author.id}/> */}
         </div>
         </>
       )}
         {openMenu1 &&  (  
         <>
         <div id='zero1' className='onStep fadeIn'>
-        <h6>
-          Videos will be coming soon
-        </h6>
+         {/* <ColumnNewRedux shuffle showLoadMore={false} authorId={author.id}/> */}
         </div>
         </>
       )}
@@ -367,7 +340,7 @@ return (
         </>
       )}
   
-      {openMenu2 && ( 
+      {/* {openMenu2 && ( 
         <>
         {
           userData.feeStructure ?
@@ -385,17 +358,10 @@ return (
           </tbody>
         </table>
         :
-        userData.packages ? (
-<Packages/> 
-        )
-        : userData?.amount_to_raise ? (
-          // Render userData.amount_to_raise if it exists
-          <h5>Monthly basis : {userData.amount_to_raise}</h5>
-        ) : (
-          <h6>Fee Structure is not available right now</h6>
-        )}
+<Packages/>
+        }
    </>
-      )}
+      )} */}
       </section>
       
               </div>
@@ -408,4 +374,4 @@ return (
 </>
 );
 }
-export default Details;
+export default Schools;

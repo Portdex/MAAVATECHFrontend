@@ -56,15 +56,11 @@ const Forms = ({ authorId }) => {
     firstName: '',
     lastName: '',
     father: '',
-    mother: '',
     dob: '',
-    address1: '',
-    address2: '',
+    address: '',
+    grade:'',
     city: '',
-    state: 'Choose...',
     file: null,
-    checked: false,
-    dateOfBirth: null,
   });
   useEffect(() => {
     const storedSelectedAuthors = localStorage.getItem('selectedAuthors');

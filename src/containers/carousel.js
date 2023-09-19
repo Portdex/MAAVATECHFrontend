@@ -1,50 +1,49 @@
 import React from 'react';
 import '../assets/slider.css'
+import { useNavigate } from 'react-router-dom';
 
 const Carousel = () => {
 	const tags = [
         {
-            title: "Give hope to orphans - support now by fund raising.",
+            title: "School around you",
         	image: "./img/locals/orphan.jpg",
-			link: "/RaiseFund",
-			label:"Events"
+			link: "/category",
+			label:"Schools"
           },
         {
-         	title: "New 'One-click' Features for Academic admissions",
+         	title: "Free Multi School Admissions Service",
         	image: "./img/locals/localschool.jpg",
-			link: "/admissionForm",
-			label:"Events"
+			link: "/category",
+			label:"Schools"
         },
         {
-            title: "Are you ready to save lives today? Donating blood is the way!",
+            title: "Support an orphan/Deserving Student",
             image: "./img/locals/blood.jpg",
-			link: "/RaiseFund",
-			label:"Events"
+			link: "/category",
+			label:"Orphan"
         },
         {
-        	title: "Help us feed homeless children and give them a warm meal.",
-            image: "./img/locals/food.jpg",
+        	title: "Raise Fund for Orphans",
+            image: "./img/locals/orphan.jpg",
 			link: "/RaiseFund",
-			label:"Events"
+			label:"Orphan"
         },
         {
-         	title: "Unlock the doors to knowledge at our upcoming education event!",
+         	title: "School Portal",
             image: "./img/locals/events.jpg",
-			link: "/category",
+			link: "",
 			label:"Events"
         },
-        {
-            title: "Reduce, reuse, and read! Find your next adventure in our used book section.",
-            image: "./img/locals/books.jpg",
-			link: "/category",
-			label:"UsedBook"
-        },
+        
         // Add more headlines as needed
       ];
+	  const navigate=useNavigate();
 	  const handleTagClick = (label) => {
 		// Save the clicked label in local storage
 		localStorage.setItem('category', label);
+		navigate('/category')
 	  };
+
   return (
     <div className="slider">
 		<div className="container segments">

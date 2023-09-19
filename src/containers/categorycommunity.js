@@ -1,4 +1,5 @@
-const Categorycommunity = ({ data, items, selectedAuthors, handleSelectButtonClick, handleSellerClick }) => {
+const Categorycommunity = ({ data, items, selectedAuthors, handleSelectButtonClick, handleSellerClick, viewDetailsLabel,
+selectLabel,  }) => {
     return (
       <div className="row">
         {items.map((author) => (
@@ -10,30 +11,37 @@ const Categorycommunity = ({ data, items, selectedAuthors, handleSelectButtonCli
 
                 </div>
                 <h3 className="community-h3 mb-2 mt-3">
-                  {selectedAuthors.includes(author.name) && <span>&#10003;</span>} {author.name}
+                  {selectedAuthors.includes(author.name) && <span>&#10003;</span>} {author.name ? author.name : '-'}
                 </h3>
+                {data === 'Orphan' ?
+                <>
+                 <div className="community-icons">
+                  {author.phone_number? author.phone_number : "-"}
+                </div> 
+                </>    
+                :
+                <>
                 <div className="community-icons">
-    <i className="f-size fa fa-fw fa-facebook" aria-hidden="true" title="Copy to use facebook-square"></i>
-<i className="f-size fa fa-fw fa-linkedin" aria-hidden="true" title="Copy to use linkedin-square"></i>
-
-<i className="f-size fa fa-fw fa-whatsapp" aria-hidden="true" title="WhatsApp"></i>
-
-<i className="f-size fa fa-fw fa-twitter" aria-hidden="true" title="Copy to use twitter-square"></i>
-
-
-    </div>
+                <i className="f-size fa fa-fw fa-facebook" aria-hidden="true" title="Copy to use facebook-square"></i>
+                <i className="f-size fa fa-fw fa-linkedin" aria-hidden="true" title="Copy to use linkedin-square"></i>
+                <i className="f-size fa fa-fw fa-whatsapp" aria-hidden="true" title="WhatsApp"></i>
+                <i className="f-size fa fa-fw fa-twitter" aria-hidden="true" title="Copy to use twitter-square"></i>
+                </div>
+                </>
+                }
                 {/* ... (other content) */}
                 <div className="button-boxes">
                   <div className="row">
-                    <div onClick={() => handleSellerClick(author.name)} className="col-lg-6 col-6 view-package-btn">
-                      View Details
-                    </div>
-                    <div
-                      className={`col-lg-6 col-6 view-package-btn checkbox`}
-                      onClick={() => handleSelectButtonClick(author)}
-                    >
-                      Select
-                    </div>
+                  <div onClick={() => handleSellerClick(author.name)} className="col-lg-6 col-6 view-package-btn">
+          {data === 'Orphan' ? viewDetailsLabel : 'View Details'}
+        </div>
+        <div
+          className={`col-lg-6 col-6 view-package-btn checkbox`}
+          onClick={() => handleSelectButtonClick(author)}
+        >
+          {data === 'School' ? selectLabel : 'Select'}
+        </div>
+                  
                   </div>
                 </div>
               </div>

@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { Auth } from "aws-amplify";
 import * as yup from 'yup'
 import { useSelector } from 'react-redux'
+import { ToastContainer } from 'react-toastify';
 const GlobalStyles = createGlobalStyle`
   header#myHeader.navbar.sticky.white {
     background: #403f83;
@@ -65,6 +66,7 @@ const Login = ({
 
   return (
     <div className='w-100'>
+      <ToastContainer/>
       <GlobalStyles/>
       <section className='jumbotron breadcumb no-bg' style={{backgroundImage: `url(${'/img/background/subheader.jpg'})`}}>
         <div className='mainbreadcumb'>

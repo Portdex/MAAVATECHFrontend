@@ -5,39 +5,47 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 //import md5 from 'md5'
 import ConfirmationComponent from '../../component/auth/Confirmation'
+import { useToasts } from 'react-toast-notifications'
 
 const Confirmation = () => {
   const navigate = useNavigate()
   const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false)
+  const { addToast } = useToasts()
   const [load, setLoad] = useState(false)
   const email = useSelector(state => state.auth.currentUser?.email || '' )
   const phone = useSelector(state => state.auth.currentUser?.phone|| '' )
   const onConfirmation = async() => {
+    const historyValue = localStorage.getItem('formhistory');
     setLoading(true)
    try {
       let response = await Auth.sendCustomChallengeAnswer(window.cognitoUser, code)      
       if (response.signInUserSession==null) {
-        // addToast("Invalid Code", {
-        //   appearance: 'error',
-        //   autoDismiss: true
-        // })
+        addToast("Invalid Code", {
+          appearance: 'error',
+          autoDismiss: true
+        })
         // console.log(error)
       }
       else {
-        // addToast('Confirming your account success', {
-        //   appearance:'success',
-        //   autoDismiss: true
-        // })
-        navigate('/')
+        addToast('Confirming your account success', {
+          appearance:'success',
+          autoDismiss: true
+        })
+        if (historyValue === 'true') {
+            navigate('/raisefund')
+          }
+        else{
+          navigate('/')
+        }
        
       }
     } catch (error) {
       console.log(error)
-    //   addToast(error.message, {
-    //     appearance: 'error',
-    //     autoDismiss: true
-    //   })
+      addToast("Invalid Code", {
+        appearance: 'error',
+        autoDismiss: true
+      })
     }
     setLoading(false)
   }

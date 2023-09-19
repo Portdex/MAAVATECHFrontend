@@ -6,7 +6,7 @@ import { createGlobalStyle } from 'styled-components';
 import Category from './component/Category';
 import Details from './component/details';
 import Forms from './component/Forms';
-import RaiseFunds from './component/RaiseFund';
+import RaiseFunds from './pages/fund';
 import Homework from './component/Homework';
 import Main from './component/main';
 import CheckLocation from './containers/CheckLocation';
@@ -14,7 +14,8 @@ import Login from './pages/auth/Login';
 import CheckLocation2 from './containers/CheckLocation2';
 import Confirmation from './pages/auth/Confirmation';
 import Profile from './component/Profile';
-import { Amplify, Storage } from 'aws-amplify'
+import { Amplify, Storage } from 'aws-amplify';
+import * as AWS from 'aws-sdk';
 import Signup from './pages/auth/Register';
 import awsmobile from './constants/aws-exports';
 import SchoolTimeline from './component/SchoolTimeline';
@@ -22,6 +23,8 @@ import FirstView from './pages/FirstView';
 import Header from './menu/Header';
 import StepByStepForm from './component/SchoolForm';
 import { Fragment } from 'react';
+import Schools from './component/getschools';
+import { ToastProvider } from 'react-toast-notifications'
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -35,6 +38,7 @@ const App=()=> (
     <div className="App">
       <Fragment>
       <Header/>
+      <ToastProvider>
       <GlobalStyles />
       <Routes >
       <Route path="/" element={<FirstView />} />
@@ -54,8 +58,11 @@ const App=()=> (
       <Route path="/timeline" element={<SchoolTimeline />} />
       <Route element={<Details />} path="/seller/:username" />
       <Route element={<Profile />} path="/profile" />
+      <Route element={<Schools />} path="/getschools/:username" />
+      
 
       </Routes>
+      </ToastProvider>
       </Fragment>
      </div>
   );

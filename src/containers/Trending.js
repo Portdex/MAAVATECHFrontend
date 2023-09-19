@@ -39,7 +39,7 @@ const Trending = () => {
 		<div className="container">
             <div className='section-title'>
                 <h3>
-                One Click Multi-Shool Admissions 
+                One Click Multi-Shool Admissions - Coming Soon 
                 </h3>
             </div>
 			
