@@ -67,9 +67,11 @@ const RaiseFunds = ({
       .then(data => {
         setCurrentEmail(data?.attributes?.email)
       })
-      .catch(err => console.log(err))
-  
-        // navigate('/login')
+      .catch(err => {
+        console.log(err);
+        // If the user is not authenticated, navigate to the login page
+        navigate('/login');
+      });
       },[])
  
 return (

@@ -66,9 +66,11 @@ Auth.currentAuthenticatedUser()
       setUserData(data?.attributes)
       console.log(userData)
     })
-    .catch(err => console.log(err))
-
-      // navigate('/login')
+    .catch(err => {
+      console.log(err);
+      // If the user is not authenticated, navigate to the login page
+      navigate('/login');
+    });
     },[])
     useEffect(() => {
       fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
