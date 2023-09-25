@@ -16,15 +16,18 @@ const Login = () =>{
     const {addToast}= useToasts()
     useEffect(() => {
       const historyValue = localStorage.getItem('formhistory');
-      if (historyValue === 'true') {
-        addToast('Verify Your email ', {
+      if (historyValue === 'posts'|| 'raisefund') {
+        addToast('kindly Verify Your email first ', {
             appearance:'error',
             autoDismiss: true
           })
       
         }
         else {
-
+          addToast('Verify Your email', {
+            appearance:'error',
+            autoDismiss: true
+          })
         }
      
     }, []); 

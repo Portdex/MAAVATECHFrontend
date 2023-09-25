@@ -280,7 +280,7 @@ const schools = selectedCountry
         <div className="height-contain">
         {data === 'Orphan'?
       <h6 className='text-center px-3 pt-5 pb-3 color-purple margin-top-mobile'>
-        Select The orphan you want to raise fund for
+        Support Deseriving student/Orphan
         </h6> 
          :
          <h6 className='text-center px-3 pt-5 pb-3 color-purple margin-top-mobile'>
@@ -289,7 +289,7 @@ const schools = selectedCountry
       }
        
         <div className="chat-messages d-flex justify-content-center flex-column">
-        {data && (
+        {/* {data && (
     <div>
       <input
         type="text"
@@ -298,43 +298,64 @@ const schools = selectedCountry
         onChange={(e) => setSearchQuery(e.target.value)}
       />
     </div>
-  )}
+  )} */}
+ {data && (
+  <div>
+    <select
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className='city-select'
+    >
+      <option value="">Select a City</option>
+      <option value="Karachi">Karachi</option>
+      <option value="Islamabad">Islamabad</option>
+      <option value="Lahore">Lahore</option>
+      <option value="Peshawar">Peshawar</option>
+      <option value="Quetta">Quetta</option>
+    </select>
+  </div>
+)}
       {data === "School" && (
+        <>
         <Categorycommunity
           data={data}
           // items={Schools}
           items={school.filter((schools) =>
-            schools.name.toLowerCase().includes(searchQuery.toLowerCase())
+            schools.city.toLowerCase().includes(searchQuery.toLowerCase())
           )}
           selectedAuthors={selectedAuthors}
           handleSelectButtonClick={handleSelectButtonClick}
           handleSellerClick={handleSellerClick}
-          viewDetailsLabel="Details" // Customize the labels here
-          selectLabel="Select"
         />
+         {school.filter((schools) =>
+          schools.city.toLowerCase() === searchQuery.toLowerCase()
+        ).length === 0 && (
+          <h6 className='text-center'>No schools available in {searchQuery}</h6>
+        )}
+       
+        </>
       )}
       {data === "Orphan" && (
         <Categorycommunity
           data={data}
           items={Orphan.filter((orphans) =>
-            orphans.name.toLowerCase().includes(searchQuery.toLowerCase())
+            orphans.city.toLowerCase().includes(searchQuery.toLowerCase())
           )}
           selectedAuthors={selectedAuthors}
           handleSelectButtonClick={handleSelectButtonClick}
           handleSellerClick={handleSellerClick}
-          viewDetailsLabel="Support" // Customize the labels here
+      // Customize the labels here
         />
       )}
        {data === "Homeless" && (
         <Categorycommunity
           data={data}
           items={Orphan.filter((orphans) =>
-            orphans.name.toLowerCase().includes(searchQuery.toLowerCase())
+            orphans.city.toLowerCase().includes(searchQuery.toLowerCase())
           )}
           selectedAuthors={selectedAuthors}
           handleSelectButtonClick={handleSelectButtonClick}
           handleSellerClick={handleSellerClick} // Customize the labels here
-    selectLabel="support"
         />
       )}
        {data === "Blood" && (
@@ -483,7 +504,7 @@ const schools = selectedCountry
 )}
 
 
-<hr className='custom-hr'/>
+{/* <hr className='custom-hr'/> */}
                 </div>
         </div>
         <div className="chat-fixed">

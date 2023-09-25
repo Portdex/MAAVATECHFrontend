@@ -1,8 +1,11 @@
+import { Auth } from 'aws-amplify';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../containers/Loader';
 
 function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 const navigate = useNavigate()
   const handleSchoolClick = () => {
     localStorage.setItem("category", "School");
@@ -24,9 +27,33 @@ const navigate = useNavigate()
     navigate('/category');
     window.location.reload();
   };
+  const handlePostClick = async () => {
+    setLoading(true)
+    try {
+      let session = await Auth.currentSession();   
+    if(session){ 
+     navigate('/lookingfor')
+     setLoading(false)
+    }
+    else {
+      navigate('/login')
+      
+      localStorage.setItem("formhistory" , "posts")
+        }
+  }
+      catch (error) {
+      console.log('errors', error)
+      
+      navigate('/login')
+ 
+      localStorage.setItem("formhistory" , "posts")
+    }
+    setLoading(false)
+  };
 
   return (
     <>
+    {loading ? <Loader /> : null}
       {/* Top Navbar */}
       <div className="top-navbar">
         <div className="top-navbar-row row">
@@ -76,21 +103,21 @@ const navigate = useNavigate()
           <span>School Timeline</span>
         </div>
         </a>
-        <a href="">
+        {/* <a href="">
         <div className="bottom-nav-item">
         <i className="fas fa-bookmark"></i>
           <span>Charity Timeline</span>
         </div>
-        </a>
-        <a onClick={() => handleOrphanClick()}>
+        </a> */}
+        <a onClick={() => handleOrphanClick()} className='cursor-pointer'>
         <div className="bottom-nav-item">
         <i className="fas fa-search"></i>
           <span>Support Orphan</span>
         </div>
         </a>
-        <a href=''>
+        <a onClick={() => handlePostClick()} className='cursor-pointer'>
         <div className="bottom-nav-item">
-        <i className="fas fa-user"></i>
+        <i className="fas fa-plus"></i>
           <span>Post</span>
         </div>
         </a>

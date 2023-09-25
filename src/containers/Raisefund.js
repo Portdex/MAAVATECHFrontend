@@ -52,13 +52,13 @@ const RaiseFunds = () => {
     }
     else {
       navigate('/login')
-      localStorage.setItem("formhistory" , true)
+      localStorage.setItem("formhistory" , "raisefund")
         }
   }
       catch (error) {
       console.log('errors', error)
       navigate('/login')
-      localStorage.setItem("formhistory" , true)
+      localStorage.setItem("formhistory" , "raisefund")
     }
   
   

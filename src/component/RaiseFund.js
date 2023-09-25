@@ -149,7 +149,7 @@ return (
             <Form.Group as={Col} controlId="formGridEmail">
             <Form.Label>Phone Number</Form.Label>
             <PhoneInput
-                      className='px-3 w-100 h-100 phone-input'
+                      className='px-3 phone-input'
                       type='tel'
                       placeholder="Enter phone number"
                       international
@@ -164,7 +164,7 @@ return (
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} xs={12} controlId="formGridCity">
+            <Form.Group as={Col} xs={12} lg={6} md={6} controlId="formGridCity">
               <Form.Label>City</Form.Label>
               <Form.Control
                 type="text"
@@ -176,8 +176,8 @@ return (
                 required
               />
             </Form.Group>
-            <Form.Group as={Col} xs={12} controlId="formGridCity">
-              <Form.Label> How much are you looking for Monthly Basis?</Form.Label>
+            <Form.Group as={Col} xs={12} lg={6} md={6} controlId="formGridCity">
+              <Form.Label> How much are you looking for fund rising?</Form.Label>
               <Form.Control
                 type="number"
                 name="amount"
@@ -193,6 +193,7 @@ return (
           <Form.Group className="mb-3" controlId="formGridAddress1">
             <Form.Label>Description</Form.Label>
             <Form.Control
+            as="textarea"
               type="text"
               name="description"
               value={description}
@@ -201,6 +202,7 @@ return (
                 }}
               placeholder="Write your message"
               required
+              style={{ height: '150px' }}
             />
           </Form.Group>
 

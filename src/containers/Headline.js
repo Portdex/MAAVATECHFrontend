@@ -1,72 +1,57 @@
-import React from 'react';
+import React , {useEffect , useState} from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 const Headline = () => {
-    const headlines = [
-        {
-            title: "Lida D.",
-            post: "consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.",
-            date: "December 02",
-            image: "https://bootdey.com/img/Content/avatar/avatar1.png",
-          },
-        {
-          title: "Lucy Moon",
-          post: "Duis autem vel eum iriure dolor in hendrerit in vulputate ?",
-          date: "December 02",
-          image: "https://bootdey.com/img/Content/avatar/avatar3.png",
-        },
-        
-        {
-            title: "ABC",
-            post: "Sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.",
-            date: "December 02",
-            image: "./img/locals/blood.jpg",
-          },
-          {
-            title: "DEF",
-            post: "Duis autem vel eum iriure dolor in hendrerit in vulputate ?",
-            date: "December 02",
-            image: "./img/book.jpg",
-          },
-          {
-            title: "user",
-            post: "Duis autem vel eum iriure dolor in hendrerit in vulputate ?",
-            date: "December 02",
-            image: "./img/school.jpg",
-          },
-          {
-            title: "John",
-            post: "consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.",
-            date: "2023-09-02",
-            image: "./img/college.jpg",
-          },
-        // Add more headlines as needed
-      ];
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then(data => {
+        data = data.data;
+        // Filter data where the email matches currentEmail
+        setPosts(data)
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err);
+        setLoading(false);
+      });
+  }, []); 
       
   return (
     <div className="headline-segment">
         <div className="container">
             <div className='section-title'>
                 <h3>
-                    Headline
+                    Posts
                 </h3>
             </div>
-            {headlines.map((headline, index) => (
+            {posts.map((post, index) => (
         <Row className='headline-row' key={index}>
           <Col className="col-2 headline-image">
-            <img src={headline.image} alt="" />
+          <img src={post.image? post.image : '/img/favi.jpg'} alt="" />
           </Col>
           <Col className='col-10 headline-text'>
-            <h4>{headline.title}</h4>
+            <h4>{post.orphanName ? post.orphanName : '-'}</h4>
             <p>
-              {headline.post}
+            {post.description ? post.description : '-'}
+            </p>
+            <p>
+              {post.amount_to_raise ? post.amount_to_raise : '-'}
             </p>
             <span className='category-tag'>
-              {headline.title}
+            {post.name ? post.name : '-'}
               <i className="fas fa-circle"></i>
             </span>
             <span className="date">
-              {headline.date}
+            {post.city ? post.city : '-'}
             </span>
           </Col>
         </Row>

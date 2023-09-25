@@ -616,11 +616,11 @@ ul.mobile-view.row > li > a:nth-child(2){
     cursor: pointer;
     transition: .7s;
 }
-.community-card:hover {
- background: #403f83;
-      transition: .7s;
-  color: #fff;
-}
+// .community-card:hover {
+//  background: #403f83;
+//       transition: .7s;
+//   color: #fff;
+// }
 .community-card .img-container {
   background-color: #a993ff;
   border-radius: 50%;
@@ -629,10 +629,10 @@ ul.mobile-view.row > li > a:nth-child(2){
   padding: 0.5em;
   width: 8em
 }
-.community-card:hover .img-container {
-  -webkit-transform: scale(1.15);
-  transform: scale(1.15);
-}
+// .community-card:hover .img-container {
+//   -webkit-transform: scale(1.15);
+//   transform: scale(1.15);
+// }
 .community-card img {
   border-radius: 50%;
   height: 100%;
@@ -641,7 +641,7 @@ ul.mobile-view.row > li > a:nth-child(2){
 }
 .community-card h3 {
   font-weight: 500;
-  font-size: 20px;
+  font-size: 15px;
 }
 .community-card p {
   font-weight: 300;
@@ -649,12 +649,23 @@ ul.mobile-view.row > li > a:nth-child(2){
   margin: 0.5em 0 2em;
   text-transform: uppercase;
 }
+.community-button
+{
+  border: 2px solid #a993ff;
+    border-radius: 10px;
+    padding: 7px;
+    width: 120px;
+}
 .community-icons {
   // display: flex;
   // justify-content: space-around;
   // margin: auto;
   // min-width: 180px;
   width: 100%;
+}
+.community-icons i 
+{
+  font-size:18px !important;
 }
 .button-boxes {
   margin-bottom: 16px;
@@ -664,11 +675,11 @@ ul.mobile-view.row > li > a:nth-child(2){
   padding: 10px;
   align-self: center;
 }
-.selected
-{
-  background: linear-gradient(#6045ea, #8567f7);
-    color: #fff;
-}
+// .selected
+// {
+//   background: linear-gradient(#6045ea, #8567f7);
+//     color: #fff;
+// }
 .view-package-btn:hover {
   background-color: #fff;
   color: #8364e2;
@@ -766,9 +777,9 @@ ul.desktop-view.row .row {
       border-radius: 50% !important;
       margin: 0 auto 1em auto !important;
     }
-    .community-card:hover .long-cards {
-      background-color: white !important;
-    }
+    // .community-card:hover .long-cards {
+    //   background-color: white !important;
+    // }
     @media (max-width:600px)
 {
   .popup-responsive{
@@ -822,17 +833,29 @@ ul.desktop-view.row .row {
     
   }
 }
-@media (max-width:430px)
+@media (max-width:590px)
 {
   .de_nav li span
   {
     padding:6px 3px !important;
   }
-  .community-card h3
-  {
-    font-size: 16px !important;
-    margin-bottom:2px !important;
-  }
+  .community-card h3 {
+    font-size: 12px !important;
+    margin-bottom: 2px !important;
+    margin-top: 0px !important;
+}
+.community-icons i 
+{
+  font-size:16px !important;
+}
+.community-button
+{
+  
+  font-size: 10px !important;
+  padding: 4px !important;
+  width:66px !important;
+  border-radius:4px !important;
+}
   .community-card p
   {
     
@@ -1113,6 +1136,25 @@ p.lead {
 .loader-overlay .spinner-border {
   width: 5rem;
   height: 5rem;
+}
+.city-select
+{
+  width: 150px;
+  height: 47px;
+  padding: 10px;
+  margin: 10px
+}
+.next-button
+{
+  width: 150px;
+  margin-top: 30px;
+  /* border: 1px solid #913eff; */
+  /* border: none; */
+  border-radius: 4px;
+  color: white;
+  background-color: #913eff;
+ 
+
 }
 
 ::-webkit-scrollbar {

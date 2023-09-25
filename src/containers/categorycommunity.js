@@ -1,7 +1,7 @@
 const Categorycommunity = ({ data, items, selectedAuthors, handleSelectButtonClick, handleSellerClick, viewDetailsLabel,
 selectLabel,  }) => {
     return (
-      <div className="row">
+      <div className="row mt-4">
         {items.map((author) => (
           <div key={author.name} className="col-lg-4 community-main col-md-6 col-6 p-3 pt-0">
             <div className="community-column text-center">
@@ -16,7 +16,7 @@ selectLabel,  }) => {
                 {data === 'Orphan' ?
                 <>
                  <div className="community-icons">
-                  {author.phone_number? author.phone_number : "-"}
+                  {author.city? author.city : "-"}
                 </div> 
                 </>    
                 :
@@ -33,13 +33,17 @@ selectLabel,  }) => {
                 <div className="button-boxes">
                   <div className="row">
                   <div onClick={() => handleSellerClick(author.name)} className="col-lg-6 col-6 view-package-btn">
-          {data === 'Orphan' ? viewDetailsLabel : 'View Details'}
+          <button className="community-button"> View Details</button>
         </div>
         <div
           className={`col-lg-6 col-6 view-package-btn checkbox`}
           onClick={() => handleSelectButtonClick(author)}
         >
-          {data === 'School' ? selectLabel : 'Select'}
+          {data=== 'Orphan' ? 
+          <button className="community-button"> Contact </button>
+           :
+          <button className="community-button"> Select </button> 
+          }
         </div>
                   
                   </div>

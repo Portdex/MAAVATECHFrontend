@@ -226,7 +226,7 @@ return (
             placeholder="Address"
           />
         </Form.Group>
-      <Form.Group controlId="exampleForm.SelectCustom">
+      {/* <Form.Group controlId="exampleForm.SelectCustom">
         <Form.Label>Select an option:</Form.Label>
         <Form.Control as="select" custom value={selectedOption} onChange={handleSelectChange}>
           <option value="">Choose Documents to upload</option>
@@ -234,15 +234,15 @@ return (
           <option value="option2">Birth Certificate</option>
           <option value="option3">Passport-size Photographs</option>
           <option value="option4">Parent/Guardian Identification</option>
-          {/* Add more options as needed */}
+         
         </Form.Control>
-      </Form.Group>
+      </Form.Group> */}
       <Form.Group className="mb-3" controlId="formGridFile">
-        <Form.Label>Upload File</Form.Label>
+        <Form.Label>Upload Application Form</Form.Label>
         <Form.Control type="file" name="file" onChange={handleFormChange} />
       </Form.Group>
 
-      <Form.Group className="mb-3" id="formGridCheckbox">
+      {/* <Form.Group className="mb-3" id="formGridCheckbox">
         <Form.Check
           type="checkbox"
           name="checked"
@@ -250,7 +250,7 @@ return (
           onChange={handleFormChange}
           label="Check me out"
         />
-      </Form.Group>
+      </Form.Group> */}
 
       <Button variant="primary" type="button" onClick={handleSubmit}>
         Submit
