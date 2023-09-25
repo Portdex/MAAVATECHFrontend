@@ -57,9 +57,9 @@ const Details = ({ authorId }) => {
   
   console.log("userData",userData)
   const [loading , setLoading]= useState(false)
-const [openMenu, setOpenMenu] = React.useState(false);
+const [openMenu, setOpenMenu] = React.useState(true);
 const [openMenu1, setOpenMenu1] = React.useState(false);
-const [openMenu2, setOpenMenu2] = React.useState(true);
+const [openMenu2, setOpenMenu2] = React.useState(false);
 const [openMenu3, setOpenMenu3] = React.useState(false);
  const navigate = useNavigate();
  const [schools, setSchools] = useState([]);
@@ -249,21 +249,16 @@ return (
                                                           
                               <span className="profile_username">{userData.label}</span>
                               <span className="profile_username text-muted">{userData.name} &nbsp; <ShareButton link={linkToShare} /></span>
+                              {storeData === 'Orphan' ? <></> : 
                               <div className="community-icons">
     <i className="f-size fa fa-fw fa-facebook" aria-hidden="true" title="Copy to use facebook-square"></i>
 <i className="f-size fa fa-fw fa-linkedin" aria-hidden="true" title="Copy to use linkedin-square"></i>
-
 <i className="f-size fa fa-fw fa-whatsapp" aria-hidden="true" title="WhatsApp"></i>
-
 <i className="f-size fa fa-fw fa-twitter" aria-hidden="true" title="Copy to use twitter-square"></i>
-
-
-    </div>
-
-                             
-                          </h4>
-                          
-                      </div>
+    </div> 
+    }
+                </h4> 
+               </div>
         </div>
       </div>
     </div>
@@ -277,13 +272,13 @@ return (
                 {/* <li id='Mainbtn' className=""><span>Digital Products</span></li>
                     <li id='Mainbtn1' className=""><span>Profile</span></li>
                     <li id='Mainbtn2' className=""><span>Services Packages</span></li> */}
-                    <li id='Mainbtn' className="mt-3 "><span onClick={handleBtnClick}>Details</span></li>
+                    <li id='Mainbtn' className="mt-3 active"><span onClick={handleBtnClick}>Details</span></li>
                     
-                    <li id='Mainbtn2' className="mt-3 active"><span onClick={handleBtnClick2}>Fee Structure</span></li>
+                    <li id='Mainbtn2' className={`mt-3 ${storeData === 'Orphan' || storeData === 'Book' ? 'display-none' : ''} `}><span onClick={handleBtnClick2}>Fee Structure</span></li>
                     <li id='Mainbtn3' className={`mt-3 ${storeData !== 'School' ? 'display-none' : ''}`}>
       {storeData === 'School' && <span onClick={handleBtnClick3}>Grades</span>}
     </li>
-                    <li id='Mainbtn1' className="mt-3 "><span onClick={handleBtnClick1}>Videos</span></li> 
+                    <li id='Mainbtn1' className={`mt-3 ${storeData === 'Orphan' ? 'display-none' : ''} `}><span onClick={handleBtnClick1}>Videos</span></li> 
                 </ul>
             </div>
           </div>

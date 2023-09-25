@@ -25,6 +25,7 @@ import StepByStepForm from './component/SchoolForm';
 import { Fragment } from 'react';
 import Schools from './component/getschools';
 import { ToastProvider } from 'react-toast-notifications'
+import LookingFor from './pages/lookingfor';
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -58,6 +59,7 @@ const App=()=> (
       <Route path="/timeline" element={<SchoolTimeline />} />
       <Route element={<Details />} path="/seller/:username" />
       <Route element={<Profile />} path="/profile" />
+      <Route element={<LookingFor />} path="/lookingfor" />
       <Route element={<Schools />} path="/getschools/:username" />
       
 

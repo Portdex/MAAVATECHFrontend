@@ -32,8 +32,12 @@ const Confirmation = () => {
           appearance:'success',
           autoDismiss: true
         })
-        if (historyValue === 'true') {
+        if (historyValue === 'raisefund') {
             navigate('/raisefund')
+          }
+          else if (historyValue === 'posts')
+          {
+            navigate('/lookingfor')
           }
         else{
           navigate('/')

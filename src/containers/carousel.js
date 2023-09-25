@@ -8,13 +8,13 @@ const Carousel = () => {
             title: "School around you",
         	image: "./img/locals/orphan.jpg",
 			link: "/category",
-			label:"Schools"
+			label:"School"
           },
         {
          	title: "Free Multi School Admissions Service",
         	image: "./img/locals/localschool.jpg",
 			link: "/category",
-			label:"Schools"
+			label:"School"
         },
         {
             title: "Support an orphan/Deserving Student",
