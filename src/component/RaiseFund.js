@@ -71,6 +71,7 @@ const RaiseFunds = ({
         console.log(err);
         // If the user is not authenticated, navigate to the login page
         navigate('/login');
+        localStorage.setItem("formhistory" , "raisefund")
       });
       },[])
  

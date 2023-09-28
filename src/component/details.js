@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import Packages from "../containers/Packages";
-import Sidebars from "../menu/sidebar";
 import '../assets/chat.css';
 import ShareButton from "../containers/ShareButton";
 import { 
@@ -44,9 +43,6 @@ header
   }
 }
 `;
-
-
-
 const Details = ({ authorId }) => {
   const { username } = useParams();
   const [inputValue, setInputValue] = useState('');

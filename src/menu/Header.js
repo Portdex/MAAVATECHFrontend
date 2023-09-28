@@ -80,6 +80,7 @@ const navigate = useNavigate()
         </div>
         </div>
           <div className="top-navbar-menu">
+            <div className="menu-item"> <a href='/'> Home  </a> </div>
             <div className="menu-item"> <a onClick={() => handleSchoolClick()}> School Admissions  </a> </div>
             <div className="menu-item"> <a onClick={() => handleUniversityClick()}> University Admissions  </a> </div>
             <div className="menu-item"> <a onClick={() => handleBookClick()}> Book Sellers  </a> </div>

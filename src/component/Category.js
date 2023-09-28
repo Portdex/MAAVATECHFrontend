@@ -73,6 +73,17 @@ const Category= () => {
   const navigate = useNavigate()
   const [selectedCountryValue, setSelectedCountryValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const cities = ["Karachi", "Islamabad", "Lahore", "Peshawar", "Quetta"];
+  const [selectedCity, setSelectedCity] = useState("");
+
+// Handle city selection
+const handleCitySelect = (city) => {
+  setSelectedCity(city);
+};
+const handleShowAll = () => {
+  setSelectedCity(""); // Set selectedCity to empty to show all schools
+};
+
   useEffect(() => {
     const storedData = localStorage.getItem("category");
     if (storedData) {
@@ -128,42 +139,7 @@ const Category= () => {
     // Update the input value whenever the selectedAuthors array changes
     setInputValue(`I am looking for ${selectedAuthors.join(', ')}`);
   }, [selectedAuthors]);
-  const openPopup = () => {
-    setIsPopupOpen(true);
-  };
-
-  const closePopup = () => {
-    setIsPopupOpen(false);
-    setPopupName('');
-    setPopupPhoneNumber('');
-  };
-
-  const handlePopupNameChange = (event) => {
-    setPopupName(event.target.value);
-  };
-
-  const handlePopupPhoneNumberChange = (event) => {
-    setPopupPhoneNumber(event.target.value);
-  };
-  const sendPopupMessage = () => {
-    // Call the Twilio API via your server to send the message
-    axios.post('http://localhost:5000/api/send-message', {
-      name: popupName,
-      phoneNumber: popupPhoneNumber,
-      message: inputValue,
-    })
-      .then((response) => {
-        console.log('Message sent successfully!');
-        console.log(response.data);
-        // Add any success message or actions you want to perform after the message is sent
-      })
-      .catch((error) => {
-        console.error('Error sending message:', error);
-        // Handle the error or show an error message to the user
-      });
-
-    closePopup(); // Close the popup after sending the message
-  };
+  
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -271,7 +247,7 @@ const schools = selectedCountry
   return(
     <>
     {loading ? <Loader /> : null}
-    {isPopupOpen && <div className="overlay-chat" onClick={closePopup}></div>}
+    
 
 <div className="containerchat">
     <div className="margin-left-sidebar p-0 responsive-flex">
@@ -299,7 +275,10 @@ const schools = selectedCountry
       />
     </div>
   )} */}
- {data && (
+  
+    {/* Display city boxes */}
+   
+ {/* {data && (
   <div>
     <select
       value={searchQuery}
@@ -314,23 +293,37 @@ const schools = selectedCountry
       <option value="Quetta">Quetta</option>
     </select>
   </div>
-)}
+)} */}
+ <div className="city-boxes mx-auto">
+      {cities.map((city) => (
+        <div
+          key={city}
+          className={`city-box ${selectedCity === city ? 'selected' : ''}`}
+          onClick={() => handleCitySelect(city)}
+        >
+          {city}
+        </div>
+      ))}
+       <div className={`city-box ${selectedCity === "" ? 'selected' : ''}`} onClick={handleShowAll}>
+        Show All
+      </div>
+    </div>
       {data === "School" && (
         <>
         <Categorycommunity
           data={data}
           // items={Schools}
           items={school.filter((schools) =>
-            schools.city.toLowerCase().includes(searchQuery.toLowerCase())
+            selectedCity === "" || schools.city.toLowerCase() === selectedCity.toLowerCase()
           )}
           selectedAuthors={selectedAuthors}
           handleSelectButtonClick={handleSelectButtonClick}
           handleSellerClick={handleSellerClick}
         />
-         {school.filter((schools) =>
-          schools.city.toLowerCase() === searchQuery.toLowerCase()
+         {selectedCity !== "" && school.filter((schools) =>
+          schools.city.toLowerCase() === selectedCity.toLowerCase()
         ).length === 0 && (
-          <h6 className='text-center'>No schools available in {searchQuery}</h6>
+          <h6 className='text-center'>No schools available in {selectedCity}</h6>
         )}
        
         </>
@@ -531,31 +524,7 @@ const schools = selectedCountry
      
      
     </div>
-    {isPopupOpen && (
-        <PopupContainer className='popup-responsive'>
-          <h3>Send Message</h3>
-          <PopupInput
-            type="text"
-            placeholder="Enter your name"
-            value={popupName}
-            onChange={handlePopupNameChange}
-          />
-          <PopupInput
-            type="tel"
-            placeholder="Enter your phone number"
-            value={popupPhoneNumber}
-            onChange={handlePopupPhoneNumberChange}
-          />
-          <div>
-{popupName && popupPhoneNumber ?
-            <PopupButton onClick={sendPopupMessage}>Done</PopupButton>
-            :
-            <PopupButton disabled className='disabled'>Done</PopupButton>
-           } 
-            <PopupButton onClick={closePopup}>Cancel</PopupButton>
-          </div>
-        </PopupContainer>
-      )}
+    
     </>
 );
   };

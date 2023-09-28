@@ -27,7 +27,10 @@ background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
 color: white;
 opacity:0.9
 }
-
+.top-navbar-row a
+{
+  color:white
+}
 @media (max-width: 895px) {
   .chat-sidebar {
     display: none;
@@ -72,6 +75,12 @@ Auth.currentAuthenticatedUser()
       navigate('/login');
     });
     },[])
+    const handleLogout = () => {
+      // Clear local storage
+      localStorage.clear();
+  navigate('/login')
+      // You can also add any additional logout logic here, such as redirecting to a login page.
+    };
     useEffect(() => {
       fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
         .then(response => {
@@ -128,7 +137,7 @@ return (
                   <h3 className="mb-0">My account</h3>
                 </div>
                 <div className="col-4 text-right">
-                  <a href="#!" className="btn btn-sm btn-primary">Settings</a>
+                  <a onClick={handleLogout} className="btn btn-sm btn-primary">Logout</a>
                 </div>
               </div>
             </div>
