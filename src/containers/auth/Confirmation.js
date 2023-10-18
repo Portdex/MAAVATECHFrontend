@@ -39,6 +39,10 @@ const Confirmation = () => {
           {
             navigate('/lookingfor')
           }
+          else if (historyValue === 'profile')
+          {
+            navigate('/profile')
+          }
         else{
           navigate('/')
         }

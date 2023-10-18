@@ -41,7 +41,7 @@ const Headline = () => {
           <Col className='col-10 headline-text'>
             <h4>{post.orphanName ? post.orphanName : '-'}</h4>
             <p>
-            {post.description ? post.description : '-'}
+            {post.description ? post.description : 'consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'}
             </p>
             <p>
               {post.amount_to_raise ? post.amount_to_raise : '-'}

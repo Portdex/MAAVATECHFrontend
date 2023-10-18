@@ -2,119 +2,118 @@ import React , {useState , useEffect} from 'react';
 import '../assets/chat.css'
 import styled , { createGlobalStyle } from 'styled-components';
 import { useNavigate,useLocation } from "react-router-dom";
-import Sidebars from '../menu/sidebar';
 import { 
-
-  Colleges,
-  Universities,
   Tuitions,
   Tutors,
   Events,
   Book,
   UsedBook,
-  Uniform,
-  Consultants, } from '../data/data';
+  Uniform, } from '../data/data';
 import Categorycommunity from '../containers/categorycommunity';
 import CountrySelect from 'react-bootstrap-country-select';
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
-import * as yup from 'yup'
-import { Auth } from 'aws-amplify'
 import Loader from '../containers/Loader';
-
-const GlobalStyles = createGlobalStyle`
-`;
-
-const PopupContainer = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  border-radius:10px
-`;
-
-const PopupInput = styled.input`
-  margin-bottom: 10px;
-  padding: 8px;
-  width: 100%;
-`;
-
-const PopupButton = styled.button`
-  padding: 8px 16px;
-  background-color: #8364e2;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  margin:10px
-`;
 
 const Category= () => {
   const [inputValue, setInputValue] = useState('');
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [data, setData] = useState(null);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupName, setPopupName] = useState('');
-  const [popupPhoneNumber, setPopupPhoneNumber] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [selectedSchool, setSelectedSchool] = useState('');
-  const [school, setSchools] = useState([]);
+  const [school, setSchool] = useState([]);
+  const [colleges, setColleges] = useState([]);
+  const [university, setUniversity] = useState([]);
+  const [consultant, setConsultant] = useState([]);
   const [Orphan, setOrphan] = useState([]);
-  console.log(school)
   const [loading, setLoading] = useState(true);
-  const [currentEmail, setCurrentEmail]=useState('')
   const [error, setError] = useState(null);
   const location = useLocation();
   const navigate = useNavigate()
   const [selectedCountryValue, setSelectedCountryValue] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const cities = ["Karachi", "Islamabad", "Lahore", "Peshawar", "Quetta"];
+  const cities = ["pakistan", "india", "uk", "us", "china"];
   const [selectedCity, setSelectedCity] = useState("");
-
-// Handle city selection
-const handleCitySelect = (city) => {
-  setSelectedCity(city);
-};
-const handleShowAll = () => {
-  setSelectedCity(""); // Set selectedCity to empty to show all schools
-};
-
+  const [userCity, setUserCity] = useState('');
+  console.log(userCity)
   useEffect(() => {
+    setLoading(true)
     const storedData = localStorage.getItem("category");
     if (storedData) {
       setData(storedData);
       console.log(data)
     }
   }, []);
+  const getUserCity = async () => {
+    setLoading(true)
+    try {
+      const response = await axios.post(
+        'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBrvLjLK6AcNCACeZZ2Ye-ZtFq2hpz2yT8'
+      );
+      const { location } = response.data;
+      const { lat, lng } = location;
+      const geocodeResponse = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBrvLjLK6AcNCACeZZ2Ye-ZtFq2hpz2yT8`
+      );
+
+      // Extract the city name from the address
+      const addressComponents = geocodeResponse.data.results[0].address_components;
+      const city = addressComponents.find(component =>
+        component.types.includes('locality')
+      )?.long_name;
+      setUserCity(city || 'City Not Found');
+
+    } catch (error) {
+      console.error('Error getting user city:', error);
+      setUserCity('City Not Found');
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  };
+
+  // Function to fetch data for a given city
+  const fetchDataForCity = async (selectedCity) => {
+    setLoading(true)
+    try {
+      const schoolDataResponse = await axios.get(
+        `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools/${selectedCity}`
+      );
+      setSchool(schoolDataResponse.data.schools.results);
+      setColleges(schoolDataResponse.data.colleges.results);
+      setUniversity(schoolDataResponse.data.universities.results);
+      setConsultant(schoolDataResponse.data.consultants.results);
+    } catch (error) {
+      console.error('Error getting data for the selected city:', error);
+      // Handle errors as needed
+    }
+    finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000); // Set loading to false when data is fetched
+    }
+  };
 
   useEffect(() => {
-    // Fetch data from the API when the component mounts
-    fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json(); // Assuming the response is in JSON format
-      })
-      .then(data => {
-        data=data.data;
-        // Update the state with the fetched data
-        setSchools(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        // Handle errors
-        setError(err);
-        setLoading(false);
-      });
-  }, []); // Empty dependency array to run the effect only once
+    getUserCity();
+  }, []);
+
   useEffect(() => {
-    // Fetch data from the API when the component mounts
+   setLoading(true)
+    if (userCity) {
+      fetchDataForCity(userCity);
+      localStorage.setItem('country' , userCity)
+    }
+  }, [userCity]);
+
+  // Handle city selection
+  const handleCitySelect = (selectedCity) => {
+    setUserCity(selectedCity);
+    
+    
+  };
+  useEffect(() => {
     setLoading(true)
     fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
       .then(response => {
@@ -125,58 +124,45 @@ const handleShowAll = () => {
       })
       .then(data => {
         data=data.data;
-        // Update the state with the fetched data
         setOrphan(data);
         setLoading(false);
       })
       .catch(err => {
-        // Handle errors
         setError(err);
         setLoading(false);
       });
   }, []);
   useEffect(() => {
-    // Update the input value whenever the selectedAuthors array changes
     setInputValue(`I am looking for ${selectedAuthors.join(', ')}`);
   }, [selectedAuthors]);
-  
-
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
   };
- 
-
 const handleSellerClick = (username) => {
   navigate(`/seller/${username}`);
 };
 const handleSelectButtonClick = (author) => {
   let updatedSelectedAuthors;
-
   if (selectedAuthors.includes(author.name)) {
     updatedSelectedAuthors = selectedAuthors.filter((username) => username !== author.name);
   } else {
     updatedSelectedAuthors = [...selectedAuthors, author.name];
   }
-
   setSelectedAuthors(updatedSelectedAuthors);
-
-  // Save the updated selectedAuthors array to local storage
   localStorage.setItem('selectedAuthors', JSON.stringify(updatedSelectedAuthors));
 };
 
 const handleCategoryChange = (event) => {
   setSelectedCategory(event.target.value);
-
   // Filter consultants based on selected category and country.
-  const filteredConsultants = Consultants.filter(
+  const filteredConsultants = consultant.filter(
     (consultant) => consultant.category === event.target.value && consultant.country === selectedCountry
   );
-
   // Get a list of unique schools from the filtered consultants.
   const consultantSchools = [...new Set(filteredConsultants.map((consultant) => consultant.school))];
 
   // Update the schools array with the filtered schools.
-  setSchools(consultantSchools);
+  setSchool(consultantSchools);
 
   setSelectedSchool(''); // Reset selected school when the category changes.
 };
@@ -187,7 +173,7 @@ const handleCountryChange = (selectedValue) => {
     setSelectedCountry(selectedCountryName);
 
     // Filter consultants based on selected category and country.
-    const filteredConsultants = Consultants.filter(
+    const filteredConsultants = consultant.filter(
       (consultant) => consultant.category === selectedCategory && consultant.country === selectedCountryName
     );
 
@@ -195,7 +181,7 @@ const handleCountryChange = (selectedValue) => {
     const consultantSchools = [...new Set(filteredConsultants.map((consultant) => consultant.school))];
 
     // Update the schools array with the filtered schools.
-    setSchools(consultantSchools);
+    setSchool(consultantSchools);
 
     setSelectedSchool(''); // Reset selected school when the country changes.
   }
@@ -219,7 +205,7 @@ const handleButtonClick = () => {
 };
 
 // Filter consultants based on selected options.
-const filteredConsultants = Consultants.filter((consultant) => {
+const filteredConsultants = consultant.filter((consultant) => {
   if (selectedCategory && consultant.category !== selectedCategory) {
     return false;
   }
@@ -232,22 +218,20 @@ const filteredConsultants = Consultants.filter((consultant) => {
   return true;
 });
 const filteredSchools = selectedCountryValue
-    ? [...new Set(Consultants.filter((consultant) => consultant.country === selectedCountryValue && consultant.category === selectedCategory).map((consultant) => consultant.school))]
+    ? [...new Set(consultant.filter((consultant) => consultant.country === selectedCountryValue && consultant.category === selectedCategory).map((consultant) => consultant.school))]
     : [];
 
 
 // Get a list of unique countries from the Consultants' data.
-const countries = [...new Set(Consultants.map((consultant) => consultant.country))];
+const countries = [...new Set(consultant.map((consultant) => consultant.country))];
 
 // Get a list of schools based on the selected country.
 const schools = selectedCountry
-  ? [...new Set(Consultants.filter((consultant) => consultant.country === selectedCountry).map((consultant) => consultant.school))]
+  ? [...new Set(consultant.filter((consultant) => consultant.country === selectedCountry).map((consultant) => consultant.school))]
   : [];
  
   return(
     <>
-    {loading ? <Loader /> : null}
-    
 
 <div className="containerchat">
     <div className="margin-left-sidebar p-0 responsive-flex">
@@ -263,37 +247,14 @@ const schools = selectedCountry
       Select the {data}s you want to send application in one-click. 
      </h6>
       }
-       
-        <div className="chat-messages d-flex justify-content-center flex-column">
-        {/* {data && (
-    <div>
-      <input
-        type="text"
-        placeholder={`Search for ${data.toLowerCase()}`}
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-    </div>
-  )} */}
-  
-    {/* Display city boxes */}
-   
- {/* {data && (
-  <div>
-    <select
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-      className='city-select'
-    >
-      <option value="">Select a City</option>
-      <option value="Karachi">Karachi</option>
-      <option value="Islamabad">Islamabad</option>
-      <option value="Lahore">Lahore</option>
-      <option value="Peshawar">Peshawar</option>
-      <option value="Quetta">Quetta</option>
-    </select>
-  </div>
-)} */}
+      <div className="chat-messages d-flex justify-content-center flex-column">
+      {/* <select onChange={(e) => handleCitySelect(e.target.value)}>
+        <option value="karachi">Karachi</option>
+        <option value="islamabad">Islamabad</option>
+        <option value="lahore">Lahore</option>
+        <option value="peshawar">Peshawar</option>
+        <option value="quetta">Quetta</option>
+      </select> */}
  <div className="city-boxes mx-auto">
       {cities.map((city) => (
         <div
@@ -304,18 +265,18 @@ const schools = selectedCountry
           {city}
         </div>
       ))}
-       <div className={`city-box ${selectedCity === "" ? 'selected' : ''}`} onClick={handleShowAll}>
+       {/* <div className={`city-box ${selectedCity === "" ? 'selected' : ''}`} onClick={handleShowAll}>
         Show All
-      </div>
+      </div> */}
     </div>
+    {loading ? <Loader/> :
+   <>
       {data === "School" && (
         <>
         <Categorycommunity
           data={data}
           // items={Schools}
-          items={school.filter((schools) =>
-            selectedCity === "" || schools.city.toLowerCase() === selectedCity.toLowerCase()
-          )}
+          items={school}
           selectedAuthors={selectedAuthors}
           handleSelectButtonClick={handleSelectButtonClick}
           handleSellerClick={handleSellerClick}
@@ -373,9 +334,7 @@ const schools = selectedCountry
       {data === "College" && (
         <Categorycommunity
           data={data}
-          items={Colleges.filter((colleges) =>
-            colleges.name.toLowerCase().includes(searchQuery.toLowerCase())
-          )}
+          items={colleges}
           selectedAuthors={selectedAuthors}
           handleSelectButtonClick={handleSelectButtonClick}
           handleSellerClick={handleSellerClick}
@@ -384,9 +343,7 @@ const schools = selectedCountry
       {data === "University" && (
         <Categorycommunity
           data={data}
-          items={Universities.filter((universities) =>
-            universities.name.toLowerCase().includes(searchQuery.toLowerCase())
-          )}
+          items={university}
           selectedAuthors={selectedAuthors}
           handleSelectButtonClick={handleSelectButtonClick}
           handleSellerClick={handleSellerClick}
@@ -495,6 +452,7 @@ const schools = selectedCountry
     />
   </>
 )}
+</>}
 
 
 {/* <hr className='custom-hr'/> */}

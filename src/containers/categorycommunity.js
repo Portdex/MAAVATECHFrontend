@@ -3,7 +3,7 @@ selectLabel,  }) => {
     return (
       <div className="row mt-4">
         {items.map((author) => (
-          <div key={author.name} className="col-lg-4 community-main col-md-6 col-6 p-3 pt-0">
+          <div key={author.id ? author.id : author.name} className="col-lg-4 community-main col-md-6 col-6 p-3 pt-0">
             <div className="community-column text-center">
               <div className={`community-card p-3 ${selectedAuthors.includes(author.name) ? 'selected' : ''}`}>
                 <div className="img-container long-cards">

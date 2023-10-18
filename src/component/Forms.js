@@ -156,7 +156,7 @@ return (
             name="lname"
             value={formData.email}
             onChange={handleFormChange}
-            placeholder="Your Father's Name"
+            placeholder="Last Name"
           />
         </Form.Group>
       </Row>
@@ -261,25 +261,6 @@ return (
       
               </div>
       </div>
-      <div className="chat-fixed">
-      <form className="chat-form">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Type your message..."
-        />
-        <button type="submit" className="disabled" disabled>Send</button>
-        <br/>
-        <div>
-        
-        </div>
-        
-      </form>
-      <p>
-          Get More Information about  <a href=""> MaavaTech </a>
-        </p>
-        </div>
     </div>
     </div>
   {/* <Footer /> */}

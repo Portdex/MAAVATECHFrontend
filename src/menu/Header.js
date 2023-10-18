@@ -85,6 +85,8 @@ const navigate = useNavigate()
             <div className="menu-item"> <a onClick={() => handleUniversityClick()}> University Admissions  </a> </div>
             <div className="menu-item"> <a onClick={() => handleBookClick()}> Book Sellers  </a> </div>
             <div className="menu-item"> <a > Tech Training  </a> </div>
+            <div className="menu-item"> <a > Orphan Tech schools  </a> </div>
+            <div className="menu-item"> <a > Technology for Deserving children  </a> </div>
             <div className="menu-item"> <a> Orphan Support Program  </a> </div>
           </div>
         </div>
@@ -98,7 +100,7 @@ const navigate = useNavigate()
           <span>Home</span> 
         </div>
         </a>
-        <a href=''>
+        <a href='/timeline'>
         <div className="bottom-nav-item">
         <i className="fas fa-fire"></i>
           <span>School Timeline</span>

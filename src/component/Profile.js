@@ -72,7 +72,9 @@ Auth.currentAuthenticatedUser()
     .catch(err => {
       console.log(err);
       // If the user is not authenticated, navigate to the login page
+      localStorage.setItem("formhistory" , "profile")
       navigate('/login');
+      
     });
     },[])
     const handleLogout = () => {
