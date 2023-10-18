@@ -9,7 +9,6 @@ import {
   useResolvedPath
 } from "react-router-dom";
 
-import CheckLocation from '../containers/CheckLocation';
 import { Dropdown } from 'react-bootstrap';
 const GlobalStyles = createGlobalStyle`
 .navbar {
@@ -220,7 +219,6 @@ const Sidebars = () => {
               </a>
             </li>
           </ul>
-          <CheckLocation/>
         </div>
 
         </div>

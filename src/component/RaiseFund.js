@@ -71,6 +71,7 @@ const RaiseFunds = ({
         console.log(err);
         // If the user is not authenticated, navigate to the login page
         navigate('/login');
+        localStorage.setItem("formhistory" , "raisefund")
       });
       },[])
  
@@ -91,6 +92,9 @@ return (
         email:currentEmail? currentEmail : email,
         description:description,
         city : city,
+        phone : phone,
+        orphanName : orphanName,
+        amount : amount
       }}
       >
          {({
@@ -250,9 +254,9 @@ return (
           
 
           <Button variant="primary" type="submit"
-           onClick={() => {
-            handleData()
-          }}>
+         onClick={(event) => {
+          handleData(event); // Pass the event
+        }}>
             Submit
           </Button>
         </Form>

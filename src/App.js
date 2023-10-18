@@ -9,7 +9,6 @@ import Forms from './component/Forms';
 import RaiseFunds from './pages/fund';
 import Homework from './component/Homework';
 import Main from './component/main';
-import CheckLocation from './containers/CheckLocation';
 import Login from './pages/auth/Login';
 import CheckLocation2 from './containers/CheckLocation2';
 import Confirmation from './pages/auth/Confirmation';
@@ -26,6 +25,7 @@ import { Fragment } from 'react';
 import Schools from './component/getschools';
 import { ToastProvider } from 'react-toast-notifications'
 import LookingFor from './pages/lookingfor';
+import Checkform from './containers/checkform';
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -54,11 +54,11 @@ const App=()=> (
       <Route path="/home" element={<Home />} />
       {/* <Route path='/register' element={<React.Fragment><Register /></React.Fragment>} /> */}
       {/* <Route path="/checkform" element={<StepByStepForm />} /> */}
-      <Route path="/check" element={<CheckLocation />} />
       <Route path="/check2" element={<CheckLocation2 />} />
       <Route path="/timeline" element={<SchoolTimeline />} />
       <Route element={<Details />} path="/seller/:username" />
       <Route element={<Profile />} path="/profile" />
+      <Route element={<Checkform />} path="/form" />
       <Route element={<LookingFor />} path="/lookingfor" />
       <Route element={<Schools />} path="/getschools/:username" />
       

@@ -6,6 +6,7 @@ body{
 .img-sm {
     width: 46px;
     height: 46px;
+    border-radius:4px
 }
 
 .panel {
@@ -71,7 +72,8 @@ body{
 
 .media-block .media-left {
     display: block;
-    float: left
+    float: left;
+    margin-right: 16px;
 }
 
 .media-block .media-right {
@@ -92,7 +94,8 @@ body{
 
 .thumbnail {
     border-radius: 0;
-    border-color: #e9e9e9
+    border-color: #e9e9e9;
+    margin-bottom: 10px;
 }
 
 .tag.tag-sm, .btn-group-sm>.tag {

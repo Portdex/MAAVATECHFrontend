@@ -1153,9 +1153,21 @@ p.lead {
   border-radius: 4px;
   color: white;
   background-color: #913eff;
- 
-
 }
+.city-boxes
+{
+  text-align:center;
+}
+.city-box {
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  border: 2px solid #a993ff;
+  margin: 10px;
+  border-radius: 4px;
+  cursor:pointer
+}
+
 
 ::-webkit-scrollbar {
   width: 5px; /* Set the width of the scrollbar */

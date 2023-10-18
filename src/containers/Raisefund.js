@@ -31,8 +31,8 @@ const RaiseFunds = () => {
     amount_to_raise:amount,
     phone_number:phone,
   }
-  console.log("userData" , userData)
-  const handleData = async () => {
+  const handleData = async (event) => {
+    event.preventDefault();
     try {    
       let session = await Auth.currentSession();   
     if(session){ 
@@ -43,6 +43,7 @@ const RaiseFunds = () => {
         data: userData,
         crossDomain: true,
       });
+      console.log("response " , response)
       addToast('Your form is submitted succesfully', {
         appearance: 'success',
         autoDismiss: true,

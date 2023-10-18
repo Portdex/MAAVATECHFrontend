@@ -25,7 +25,9 @@ const awsmobile = {
     },
     "aws_cognito_verification_mechanisms": [
         "PHONE_NUMBER"
-    ]
+    ],
+    "aws_user_files_s3_bucket": "maavastorage154158-dev",
+    "aws_user_files_s3_bucket_region": "eu-west-2"
 };
 
 

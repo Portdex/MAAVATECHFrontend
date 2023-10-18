@@ -8,6 +8,9 @@ import {
       email:'',
       city:'',
       amount_to_raise:'',
+      orphanName:'',
+      description:'',
+      phone:''
       
     }
   }

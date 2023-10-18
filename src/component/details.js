@@ -3,21 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import Packages from "../containers/Packages";
-import Sidebars from "../menu/sidebar";
 import '../assets/chat.css';
+import Loader from '../containers/Loader';
 import ShareButton from "../containers/ShareButton";
 import { 
-  Colleges,
-  Universities,
   Tuitions,
   Tutors,
   Events,
   Book,
   UsedBook,
   Uniform,
-  Consultants,
   Orphans, } from '../data/data';
 import Footer from "../menu/footer";
+import axios from 'axios';
+import { getUserCityAndData } from "../containers/LocationService";
 const GlobalStyles = createGlobalStyle`
 .navbar {
   display: none;
@@ -44,64 +43,51 @@ header
   }
 }
 `;
-
-
-
 const Details = ({ authorId }) => {
   const { username } = useParams();
-  const [inputValue, setInputValue] = useState('');
   const [userData, setUserData] = useState([])
-  const [storeData, setstoreData] = useState([])
+  const [storeData, setStoreData] = useState([])
   console.log('category',storeData)
   const [serviceData, setServiceData] = useState([])
-  
   console.log("userData",userData)
   const [loading , setLoading]= useState(false)
-const [openMenu, setOpenMenu] = React.useState(true);
-const [openMenu1, setOpenMenu1] = React.useState(false);
-const [openMenu2, setOpenMenu2] = React.useState(false);
-const [openMenu3, setOpenMenu3] = React.useState(false);
- const navigate = useNavigate();
- const [schools, setSchools] = useState([]);
- const [error, setError] = useState(null);
-
-    useEffect(() => {
-      // Retrieve data from local storage
-      const storedData = localStorage.getItem("category");
+  const [openMenu, setOpenMenu] = React.useState(true);
+  const [openMenu1, setOpenMenu1] = React.useState(false);
+  const [openMenu2, setOpenMenu2] = React.useState(false);
+  const [openMenu3, setOpenMenu3] = React.useState(false);
+  const navigate = useNavigate();
+  const [school, setSchool] = useState([]);
+  const [colleges, setColleges] = useState([]);
+  const [universities, setUniversities] = useState([]);
+  const [consultant, setConsultant] = useState([]);
+  const [error, setError] = useState(null);
+  const [userCity, setUserCity] = useState('');
+  const storedData = localStorage.getItem("category");
   
-      // Check if data exists in local storage
+    useEffect(() => {
+      setLoading(true);
+      async function fetchData() {
+        const { city, schools, colleges, universities , consultant } = await getUserCityAndData();
+  
+        setUserCity(city);
+        setSchool(schools);
+        setColleges(colleges);
+        setUniversities(universities);
+        setConsultant(consultant);
+      }
+   
       if (storedData) {
-        // If data exists, update the state with the retrieved data
-        setstoreData(storedData);
+        setStoreData(storedData);
         console.log(storeData);
       }
-     
-      setLoading(true);
       if (storeData === "College") {
-        const product = Colleges.find((product) => product.name === username);
+        const product = colleges.find((product) => product.name === username);
         setUserData(product);
       } else if (storeData === "School") {
-        fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools")
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json(); // Assuming the response is in JSON format
-        })
-        .then(data => {
-          data=data.data;
-          // Update the state with the fetched data
-          setUserData(data.find((product) => product.name === username));
-          setLoading(false);
-        })
-        .catch(err => {
-          // Handle errors
-          setError(err);
-          setLoading(false);
-        });
-       
+        const product = school.find((product) => product.name === username);
+        setUserData(product);
       } else if (storeData === "University") {
-        const product = Universities.find((product) => product.name === username);
+        const product = universities.find((product) => product.name === username);
         setUserData(product);
       }
 
@@ -130,7 +116,7 @@ const [openMenu3, setOpenMenu3] = React.useState(false);
         setUserData(product);
       }
       else if (storeData === "Consultant") {
-        const product = Consultants.find((product) => product.name === username);
+        const product = consultant.find((product) => product.name === username);
         setUserData(product);
       }
       else if (storeData === "Orphan") {
@@ -145,12 +131,10 @@ const [openMenu3, setOpenMenu3] = React.useState(false);
           data=data.data;
           // Update the state with the fetched data
           setUserData(data.find((product) => product.name === username));
-          setLoading(false);
         })
         .catch(err => {
           // Handle errors
           setError(err);
-          setLoading(false);
         });
       }
       else if (storeData === "Blood") {
@@ -166,13 +150,13 @@ const [openMenu3, setOpenMenu3] = React.useState(false);
         setUserData(product);
       }
   
-      setLoading(false);
+      
   
       window.scrollTo(0, 0);
-    }, [storeData, username]); 
-   
-  
-    
+      fetchData();
+      setLoading(false);
+    }, [storeData, username , userCity]); 
+
   const handleBtnClick = () => {
     setOpenMenu(!openMenu);
     setOpenMenu1(false);
@@ -213,13 +197,11 @@ const [openMenu3, setOpenMenu3] = React.useState(false);
     document.getElementById("Mainbtn1").classList.remove("active");
     document.getElementById("Mainbtn2").classList.remove("active");
   };
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
   const linkToShare = 'https://your-shareable-link.com';
 
 return (
  <>
+     {loading ? <Loader /> : 
 <div className="containerchat">
 <GlobalStyles/>
     <div className="margin-left-sidebar p-0 responsive-flex">
@@ -233,8 +215,8 @@ return (
         <div className="col-md-2">
         <div className="profile_avatar ui-icon icon profile-height">
                    
-        {userData && userData.image ? (
-    <img src={userData.image} alt="" />
+        {userData && userData.icon ? (
+    <img src={userData.icon} alt="" />
   ) : (
     <img src="/img/favi.jpg" alt="" />
   )}
@@ -245,10 +227,10 @@ return (
         <div className="col-md-10 d-flex align-items-center">
         <div className="profile_name">
                           <h4>
-                            {userData.name}      
+                            {userData?.name}      
                                                           
-                              <span className="profile_username">{userData.label}</span>
-                              <span className="profile_username text-muted">{userData.name} &nbsp; <ShareButton link={linkToShare} /></span>
+                              <span className="profile_username">{userData?.label}</span>
+                              <span className="profile_username text-muted">{userData?.name} &nbsp; <ShareButton link={linkToShare} /></span>
                               {storeData === 'Orphan' ? <></> : 
                               <div className="community-icons">
     <i className="f-size fa fa-fw fa-facebook" aria-hidden="true" title="Copy to use facebook-square"></i>
@@ -286,33 +268,43 @@ return (
       {openMenu &&  (  
         <>
         <div id='zero1' className='onStep fadeIn'>
-         {userData.city ?
+         {userCity ?
          <>
          <h6>
           City: 
          </h6>
          <p>
-          {userData.city}
+          {userCity ? userCity : ""}
          </p>
          
-          {userData.address ?
+          {userData?.formatted_address ?
           <>
           <h6> Address: </h6>
-          <p>{userData.address}</p>
+          <p>{userData?.formatted_address}</p>
           </>
           :
           <></>}
-          {userData.rating ?
+          {userData?.rating ?
           <>
           <h6>
           Ratings
         </h6>
         <p>
-          {userData.rating}
+          {userData?.rating}
         </p>
         </> 
         :
         <></> }
+        {userData?.opening_hours ? (
+          <>
+            <h6 style={{ color: userData?.opening_hours.open_now ? 'green' : 'red' }}>
+              {userData?.opening_hours.open_now ? "Open Now" : "Closed"}
+            </h6>
+            
+          </>
+        ) : (
+          <></>
+        )}
           </>
           :
           <h6>
@@ -365,11 +357,11 @@ return (
       {openMenu2 && ( 
         <>
         {
-          userData.feeStructure ?
+          userData?.feeStructure ?
           <table className="mt-3 mx-auto">
        
           <tbody>
-            {userData.feeStructure.map((item, index) => (
+            {userData?.feeStructure.map((item, index) => (
               <tr key={index}>
                 <td className="p-2 border width-dynamic">{item.name}</td>
                 <td className="p-2 border price-width">{item.price}</td>
@@ -380,12 +372,12 @@ return (
           </tbody>
         </table>
         :
-        userData.packages ? (
+        userData?.packages ? (
 <Packages/> 
         )
         : userData?.amount_to_raise ? (
-          // Render userData.amount_to_raise if it exists
-          <h5>Monthly basis : {userData.amount_to_raise}</h5>
+          // Render userData?.amount_to_raise if it exists
+          <h5>Monthly basis : {userData?.amount_to_raise}</h5>
         ) : (
           <h6>Fee Structure is not available right now</h6>
         )}
@@ -400,6 +392,7 @@ return (
     </div>
   {/* <Footer /> */}
 </div>
+}
 </>
 );
 }
