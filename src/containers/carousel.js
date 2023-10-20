@@ -51,6 +51,16 @@ const Carousel = () => {
 				<div className="swiper-wrapper" style={{transform: 'translate3d(0px, 0px, 0px)'}}>
 					{tags.map((tag, index)=>(
 						<div className="swiper-slide swiper-slide-active" style={{marginRight:'10px'}}>
+							{tag.title === 'School Portal' ?
+							<a href={tag.link} target="_blank">
+								<div className="mask"></div>
+								<img src={tag.image} alt=""/>
+								<div className="image-caption">
+									<h4 className="title-post">{tag.title}</h4>
+									{/* <span className="category-tag">SPORTS <i className="fas fa-circle"></i></span>
+									<span className="date">November 5</span> */}
+								</div>
+							</a>:
 							<a href={tag.link} onClick={() => handleTagClick(tag.label)}>
 								<div className="mask"></div>
 								<img src={tag.image} alt=""/>
@@ -60,6 +70,7 @@ const Carousel = () => {
 									<span className="date">November 5</span> */}
 								</div>
 							</a>
+								}	
 						</div>
 					))}
 				</div>
