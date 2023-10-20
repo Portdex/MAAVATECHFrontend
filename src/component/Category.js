@@ -36,13 +36,11 @@ const Category= () => {
   const cities = ["pakistan", "india", "uk", "us", "china"];
   const [selectedCity, setSelectedCity] = useState("");
   const [userCity, setUserCity] = useState('');
-  console.log(userCity)
   useEffect(() => {
     setLoading(true)
     const storedData = localStorage.getItem("category");
     if (storedData) {
       setData(storedData);
-      console.log(data)
     }
   }, []);
   const getUserCity = async () => {
@@ -248,14 +246,7 @@ const schools = selectedCountry
      </h6>
       }
       <div className="chat-messages d-flex justify-content-center flex-column">
-      {/* <select onChange={(e) => handleCitySelect(e.target.value)}>
-        <option value="karachi">Karachi</option>
-        <option value="islamabad">Islamabad</option>
-        <option value="lahore">Lahore</option>
-        <option value="peshawar">Peshawar</option>
-        <option value="quetta">Quetta</option>
-      </select> */}
- <div className="city-boxes mx-auto">
+ {/* <div className="city-boxes mx-auto">
       {cities.map((city) => (
         <div
           key={city}
@@ -265,10 +256,7 @@ const schools = selectedCountry
           {city}
         </div>
       ))}
-       {/* <div className={`city-box ${selectedCity === "" ? 'selected' : ''}`} onClick={handleShowAll}>
-        Show All
-      </div> */}
-    </div>
+    </div> */}
     {loading ? <Loader/> :
    <>
       {data === "School" && (

@@ -62,8 +62,7 @@ const Details = ({ authorId }) => {
   const [consultant, setConsultant] = useState([]);
   const [error, setError] = useState(null);
   const [userCity, setUserCity] = useState('');
-  const storedData = localStorage.getItem("category");
-  
+ 
     useEffect(() => {
       setLoading(true);
       async function fetchData() {
@@ -75,7 +74,7 @@ const Details = ({ authorId }) => {
         setUniversities(universities);
         setConsultant(consultant);
       }
-   
+      const storedData = localStorage.getItem("category");
       if (storedData) {
         setStoreData(storedData);
         console.log(storeData);

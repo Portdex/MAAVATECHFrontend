@@ -18,6 +18,7 @@ const RaiseFunds = () => {
   const [amount, setAmount] = useState('')
   const [currentEmail, setCurrentEmail] = useState('')
   const [phone, setPhone] = useState('')
+  const [photopath, setPhotopath] = useState('')
   const [userAuth, setUserAuth] = useState('')
   const { addToast } = useToasts()
   const navigate=useNavigate()
@@ -26,10 +27,11 @@ const RaiseFunds = () => {
     name:name,
     email: currentEmail ? currentEmail : email,
     city:city,
-    orphan_Name:orphanName,
+    orphan_name:orphanName,
     description:description,
     amount_to_raise:amount,
     phone_number:phone,
+    photo_path:photopath,
   }
   const handleData = async (event) => {
     event.preventDefault();

@@ -7,11 +7,12 @@ import {
       name:'',
       email:'',
       city:'',
-      amount_to_raise:'',
+      amount:'',
       orphanName:'',
       description:'',
-      phone:''
-      
+      phone:'',
+      photopath:'',
+
     }
   }
   
