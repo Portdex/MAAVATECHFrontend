@@ -1,139 +1,45 @@
-import { Auth } from 'aws-amplify';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useNavigate } from 'react-router-dom';
-import { useToasts } from 'react-toast-notifications';
 
-import * as yup from 'yup'
-const schema = yup.object().shape({
-  name: yup.string().required('Please input firstName'),
-  orphanName: yup.string().required('Please input lastName'),
-  email: yup.string().email('Invalid email format').required('Please input your email'),
-  phone: yup.string().required('Please input your telephone number'),
-  city: yup.string().required('Please select your country'),
-});
-// ... Other imports
+function Checkform() {
+  const [formData, setFormData] = useState({
+    name: 'alex',
+    email: 'mubashiraiqbal786@gmail.com',
+    address: '1234street',
+    city: 'london',
+    orphan_name: ' brian',
+    amount_to_raise:'33444',
+    description: 'testing',
+    phone_number: '+223243211',
+    photo_path:'123.jpg',
+    // Add other fields as needed
+  });
 
-const Checkform = () => {
-  const { addToast } = useToasts();
-const navigate = useNavigate()
-  const handleData = async (values) => {
-    try {
-      let session = await Auth.currentSession();
-      if (session) {
-        // Dispatch the form data if needed
-        // dispatch(fund(values));
-
-        const response = await axios({
-          method: 'post',
-          url: 'https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createFundRaiseEntry',
-          data: values,
-          crossDomain: true,
-        });
-
-        if (response.status === 200) {
-          // Display a success toast
-          addToast('Your form is submitted successfully', {
-            appearance: 'success',
-            autoDismiss: true,
-          });
-
-          // Redirect to a different page
-          localStorage.setItem('category', 'Orphan');
-          navigate('/category');
-        } else {
-          // Handle form submission failure
-          // You can display an error toast or take other actions
-          addToast('Form submission failed', {
-            appearance: 'error',
-            autoDismiss: true,
-          });
-        }
+  const handleSubmit = () => {
+    axios.post('https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createFundRaiseEntry', formData)
+    .then((response) => {
+      if (response.status === 200) {
+        // Handle a successful response
+        console.log('Data successfully posted:', response.data);
       } else {
-        // User is not authenticated, navigate to the login page
-        navigate('/login');
-        localStorage.setItem('formhistory', 'raisefund');
+        // Handle other status codes or potential API errors
+        console.error('API responded with status:', response.status);
+        console.log('API response data:', response.data);
       }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-
-      // Handle any other error conditions, and you can display an error toast as well
-      addToast('Form submission failed', {
-        appearance: 'error',
-        autoDismiss: true,
-      });
-
-      // Navigate to the login page
-      navigate('/login');
-      localStorage.setItem('formhistory', 'raisefund');
-    }
+    })
+    .catch((error) => {
+      // Handle network errors or request errors
+      console.error('Error posting data:', error);
+    });
+  
   };
 
   return (
     <div>
-      <h2>Raise Fund Form</h2>
-      <Formik
-        initialValues={{
-          name: '',
-          email: '',
-          orphanName: '',
-          city: '',
-          phoneNumber: '',
-          description: '',
-          amount: '',
-        }}
-        validationSchema={schema}
-        onSubmit={(values) => {
-          handleData(values);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div>
-              <label>Name:</label>
-              <Field type="text" name="name" required />
-              <ErrorMessage name="name" component="div" />
-            </div>
-            <div>
-              <label>Email:</label>
-              <Field type="text" name="email" required />
-              <ErrorMessage name="email" component="div" />
-            </div>
-            <div>
-              <label>Orphan Name:</label>
-              <Field type="text" name="orphanName" required />
-              <ErrorMessage name="orphanName" component="div" />
-            </div>
-
-            <div>
-              <label>Phone Number:</label>
-              <Field type="text" name="phoneNumber" required />
-              <ErrorMessage name="phoneNumber" component="div" />
-            </div>
-            <div>
-              <label>City:</label>
-              <Field type="text" name="city" required />
-              <ErrorMessage name="city" component="div" />
-            </div>
-            <div>
-              <label>Description:</label>
-              <Field type="text" name="description" required />
-              <ErrorMessage name="description" component="div" />
-            </div>
-            <div>
-              <label>Amount:</label>
-              <Field type="text" name="amount" required />
-              <ErrorMessage name="amount" component="div" />
-            </div>
-            {/* Repeat for other form fields */}
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
-        )}
-      </Formik>
+      <h1>Fund Raise Form</h1>
+      <button onClick={handleSubmit}>Submit Data</button>
     </div>
   );
-};
+}
 
 export default Checkform;

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 async function getUserCityAndData() {
-  const locality = localStorage.getItem("country");
   try {
     const response = await axios.post(
       'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBrvLjLK6AcNCACeZZ2Ye-ZtFq2hpz2yT8'
@@ -17,7 +16,7 @@ async function getUserCityAndData() {
     )?.long_name;
 
     const schoolDataResponse = await axios.get(
-      `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools/${locality}`
+      `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools/${city}`
     );
 
     return {

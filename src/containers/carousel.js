@@ -31,7 +31,7 @@ const Carousel = () => {
         {
          	title: "School Portal",
             image: "./img/locals/events.jpg",
-			link: "",
+			link: "https://school.maavatech.com/web/login",
 			label:"Events"
         },
         

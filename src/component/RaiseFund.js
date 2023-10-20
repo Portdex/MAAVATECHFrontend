@@ -119,6 +119,8 @@ return (
                   }}
                 placeholder="Enter Your Name"
                 required
+                isInvalid={!!touched && !!errors.firstName}
+                  onBlur={handleBlur}
               />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridEmail">
