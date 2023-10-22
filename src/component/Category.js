@@ -35,7 +35,7 @@ const Category= () => {
   const [searchQuery, setSearchQuery] = useState('');
   const cities = ["pakistan", "india", "uk", "us", "china"];
   const [selectedCity, setSelectedCity] = useState("");
-  const [userCity, setUserCity] = useState('');
+  const [userLocation, setUserLocation] = useState({});
   useEffect(() => {
     setLoading(true)
     const storedData = localStorage.getItem("category");
@@ -45,26 +45,31 @@ const Category= () => {
   }, []);
   const getUserCity = async () => {
     setLoading(true)
-    try {
-      const response = await axios.post(
-        'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBrvLjLK6AcNCACeZZ2Ye-ZtFq2hpz2yT8'
-      );
-      const { location } = response.data;
-      const { lat, lng } = location;
-      const geocodeResponse = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyBrvLjLK6AcNCACeZZ2Ye-ZtFq2hpz2yT8`
-      );
-
-      // Extract the city name from the address
-      const addressComponents = geocodeResponse.data.results[0].address_components;
-      const city = addressComponents.find(component =>
-        component.types.includes('locality')
-      )?.long_name;
-      setUserCity(city || 'City Not Found');
-
+    try {      
+      
+      if (navigator.geolocation) {
+        // get the current users location
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            // save the geolocation coordinates in two variables
+            const { latitude, longitude } = position.coords;
+            // update the value of userlocation variable
+            setUserLocation({ latitude, longitude });
+          },
+          // if there was an error getting the users location
+          (error) => {
+            console.error('Error getting user location:', error);
+          }
+        );
+      }
+      // if geolocation is not supported by the users browser
+      else {
+        console.error('Geolocation is not supported by this browser.');
+      }
+          
     } catch (error) {
       console.error('Error getting user city:', error);
-      setUserCity('City Not Found');
+      setUserLocation({})
     }
     setTimeout(() => {
       setLoading(false);
@@ -76,7 +81,7 @@ const Category= () => {
     setLoading(true)
     try {
       const schoolDataResponse = await axios.get(
-        `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools/${selectedCity}`
+        `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchoolsByLatitude/${selectedCity.latitude}/longitude/${selectedCity.longitude}`
       );
       setSchool(schoolDataResponse.data.schools.results);
       setColleges(schoolDataResponse.data.colleges.results);
@@ -99,18 +104,11 @@ const Category= () => {
 
   useEffect(() => {
    setLoading(true)
-    if (userCity) {
-      fetchDataForCity(userCity);
-      localStorage.setItem('country' , userCity)
+    if (userLocation) {
+      fetchDataForCity(userLocation);      
     }
-  }, [userCity]);
-
-  // Handle city selection
-  const handleCitySelect = (selectedCity) => {
-    setUserCity(selectedCity);
-    
-    
-  };
+  }, [userLocation]);
+  
   useEffect(() => {
     setLoading(true)
     fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")

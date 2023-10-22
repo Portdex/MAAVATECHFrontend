@@ -20,8 +20,7 @@ const Login = () =>{
         addToast('kindly Verify Your email first ', {
             appearance:'error',
             autoDismiss: true
-          })
-      
+          })    
         }
         else {
           addToast('Verify Your email', {
@@ -40,20 +39,22 @@ const Login = () =>{
             navigate('/confirmation')
           } 
           catch (error) {     
+            console.log(error);
             try {
               await Auth.signUp({
                 username: email,
                 password: email,
                 attributes: {
                   email: email, 
+                  name:email
                 }          
               });
               let result=await Auth.signIn(email);
               window.cognitoUser=result
               navigate('/confirmation')
-            }
-            
+            }            
             catch(ex) {
+              console.log(ex)
               toast.error('User doesnot exist', {
                 position: toast.POSITION.TOP_RIGHT, // You can customize the position
               });
