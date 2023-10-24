@@ -16,7 +16,6 @@ import {
   Orphans, } from '../data/data';
 import Footer from "../menu/footer";
 import axios from 'axios';
-import { getUserCityAndData } from "../containers/LocationService";
 const GlobalStyles = createGlobalStyle`
 .navbar {
   display: none;
@@ -57,23 +56,70 @@ const Details = ({ authorId }) => {
   const [openMenu3, setOpenMenu3] = React.useState(false);
   const navigate = useNavigate();
   const [school, setSchool] = useState([]);
+  console.log('school' , school)
   const [colleges, setColleges] = useState([]);
   const [universities, setUniversities] = useState([]);
   const [consultant, setConsultant] = useState([]);
   const [error, setError] = useState(null);
   const [userCity, setUserCity] = useState('');
+  const [userLocation, setUserLocation] = useState({});
+  const [selectedCity, setSelectedCity] = useState("");
+  const getUserCity = async () => {
+    setLoading(true)
+    try {      
+      
+      if (navigator.geolocation) {
+        // get the current users location
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            // save the geolocation coordinates in two variables
+            const { latitude, longitude } = position.coords;
+            // update the value of userlocation variable
+            setUserLocation({ latitude, longitude });
+            
+          },
+          // if there was an error getting the users location
+          (error) => {
+            console.error('Error getting user location:', error);
+          }
+        );
+      }
+      // if geolocation is not supported by the users browser
+      else {
+        console.error('Geolocation is not supported by this browser.');
+      }
+          
+    } catch (error) {
+      console.error('Error getting user city:', error);
+      setUserLocation({})
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+  };
+  const fetchDataForCity = async (selectedCity) => {
+    setLoading(true)
+    try {
+      const schoolDataResponse = await axios.get(
+        `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchoolsByLatitude/${selectedCity.latitude}/longitude/${selectedCity.longitude}`
+      );
+      setSchool(schoolDataResponse.data.schools.results);
+      setColleges(schoolDataResponse.data.colleges.results);
+      setUniversities(schoolDataResponse.data.universities.results);
+      setConsultant(schoolDataResponse.data.consultants.results);
+    } catch (error) {
+      console.error('Error getting data for the selected city:', error);
+      // Handle errors as needed
+    }
+    finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000); // Set loading to false when data is fetched
+    }
+  };
  
     useEffect(() => {
       setLoading(true);
-      async function fetchData() {
-        const { city, schools, colleges, universities , consultant } = await getUserCityAndData();
-  
-        setUserCity(city);
-        setSchool(schools);
-        setColleges(colleges);
-        setUniversities(universities);
-        setConsultant(consultant);
-      }
       const storedData = localStorage.getItem("category");
       if (storedData) {
         setStoreData(storedData);
@@ -152,10 +198,20 @@ const Details = ({ authorId }) => {
       
   
       window.scrollTo(0, 0);
-      fetchData();
+      // fetchData();
       setLoading(false);
-    }, [storeData, username , userCity]); 
-
+    }, [storeData, username ,getUserCity ]); 
+    useEffect(() => {
+      getUserCity();
+    }, []);
+  
+    useEffect(() => {
+     setLoading(true)
+      if (userLocation) {
+        fetchDataForCity(userLocation);      
+      }
+    }, [userLocation]);
+    
   const handleBtnClick = () => {
     setOpenMenu(!openMenu);
     setOpenMenu1(false);
@@ -219,7 +275,7 @@ return (
   ) : (
     <img src="/img/favi.jpg" alt="" />
   )}
-                   <i className="fa fa-check"></i>
+                   {/* <i className="fa fa-check"></i> */}
                    
                </div>
         </div>
@@ -266,20 +322,20 @@ return (
         </div>
       {openMenu &&  (  
         <>
-        <div id='zero1' className='onStep fadeIn'>
-         {userCity ?
+        <div id='zero1' className='onStep fadeIn mob-margin'>
+         {userLocation ?
          <>
-         <h6>
+         {/* <h6>
           City: 
          </h6>
          <p>
           {userCity ? userCity : ""}
-         </p>
+         </p> */}
          
-          {userData?.formatted_address ?
+          {userData?.vicinity ?
           <>
           <h6> Address: </h6>
-          <p>{userData?.formatted_address}</p>
+          <p>{userData?.vicinity}</p>
           </>
           :
           <></>}

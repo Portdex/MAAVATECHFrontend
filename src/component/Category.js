@@ -36,6 +36,7 @@ const Category= () => {
   const cities = ["pakistan", "india", "uk", "us", "china"];
   const [selectedCity, setSelectedCity] = useState("");
   const [userLocation, setUserLocation] = useState({});
+
   useEffect(() => {
     setLoading(true)
     const storedData = localStorage.getItem("category");
@@ -55,6 +56,7 @@ const Category= () => {
             const { latitude, longitude } = position.coords;
             // update the value of userlocation variable
             setUserLocation({ latitude, longitude });
+            
           },
           // if there was an error getting the users location
           (error) => {
@@ -278,9 +280,7 @@ const schools = selectedCountry
       {data === "Orphan" && (
         <Categorycommunity
           data={data}
-          items={Orphan.filter((orphans) =>
-            orphans.city.toLowerCase().includes(searchQuery.toLowerCase())
-          )}
+          items={Orphan}
           selectedAuthors={selectedAuthors}
           handleSelectButtonClick={handleSelectButtonClick}
           handleSellerClick={handleSellerClick}

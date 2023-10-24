@@ -2,8 +2,6 @@ import React, { memo,useState,  useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import Packages from "../containers/Packages";
-import Sidebars from "../menu/sidebar";
 import { Formik } from 'formik'
 import '../assets/chat.css'
 import PhoneInput from 'react-phone-number-input'
@@ -52,8 +50,11 @@ const RaiseFunds = ({
   setDescription,
   phone,
   setPhone,
+  file,
+  setFile,
   city , 
   setCity,
+  handleFileUpload,
   currentEmail,
   setCurrentEmail,  
   handleData,
@@ -213,48 +214,10 @@ return (
               style={{ height: '150px' }}
             />
           </Form.Group>
-
-      
-{/* <Row>
-          <Form.Group as={Col} className="mb-3" controlId="formGridAmount">
-            <Form.Label>Amount to Raise</Form.Label>
-            <Form.Control
-              type="number"
-              name="amount"
-              value={formData.amount}
-              onChange={handleFormChange}
-              placeholder="Enter the amount to raise"
-              required
-            />
-          </Form.Group>
-          <Form.Group as={Col} controlId="exampleForm.SelectCustom">
-        <Form.Label>Select Category:</Form.Label>
-        <Form.Control as="select" custom value={selectedFundOption} onChange={handleFundSelectChange}>
-          <option value="">Choose Category to raise fund</option>
-          <option value="Orphan">Orphan</option>
-          <option value="BloodDonate">Blood Donation</option>
-          <option value="NeedyStudents">Needy students</option>
-          <option value="Homeless">Homeless Child Food</option>
-        </Form.Control>
-      </Form.Group>
-          </Row> */}
-          {/* <Form.Group controlId="exampleForm.SelectCustom">
-        <Form.Label>Select an option:</Form.Label>
-        <Form.Control as="select" custom value={selectedOption} onChange={handleSelectChange}>
-          <option value="">Choose Documents to upload</option>
-          <option value="option1">Fundraising Plan</option>
-          <option value="option2">Donation Receipts</option>
-          <option value="option3">Financial Statements</option>
-          <option value="option4">Event Budget</option>
-         
-        </Form.Control>
-      </Form.Group>
       <Form.Group className="mb-3" controlId="formGridFile">
         <Form.Label>Upload File</Form.Label>
-        <Form.Control type="file" name="file" onChange={handleFormChange} />
-      </Form.Group> */}
-          
-
+        <Form.Control type="file" name="file" onChange={handleFileUpload} />
+      </Form.Group>
           <Button variant="primary" type="submit"
          onClick={(event) => {
           handleData(event); // Pass the event

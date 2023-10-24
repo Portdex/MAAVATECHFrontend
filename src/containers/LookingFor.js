@@ -36,7 +36,13 @@ const LookingFor = () => {
       let session = await Auth.currentSession();   
     if(session){ 
       dispatch(lookingfor(userData));      
-
+      // const response = axios({
+      //   method: 'post',
+      //   url: 'https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createPost',
+      //   data: userData,
+      //   crossDomain: true,
+      // });
+      // console.log('response' , response)
       addToast('Your form is submitted succesfully', {
         appearance: 'success',
         autoDismiss: true,
@@ -52,36 +58,7 @@ const LookingFor = () => {
       console.log('errors', error)
       navigate('/login')
       localStorage.setItem("formhistory" , "posts")
-    }
-//         try {
-//       let session = await Auth.currentSession();   
-//     if(session){ 
-//       dispatch(fund(userData));      
-//       const response = axios({
-//         method: 'post',
-//         url: 'https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createFundRaiseEntry',
-//         data: userData,
-//         crossDomain: true,
-//       });
-//       addToast('Your form is submitted succesfully', {
-//         appearance: 'success',
-//         autoDismiss: true,
-//       })
-//       localStorage.setItem('category' ,'Orphan')
-//       navigate('/category')
-//     }
-//     else {
-//       navigate('/login')
-//       localStorage.setItem("formhistory" , true)
-//         }
-//   }
-    //   catch (error) {
-    //   console.log('errors', error)
-    //   navigate('/login')
-    //   localStorage.setItem("formhistory" , true)
-    // }
-  
-  
+    }  
   }
 
 
