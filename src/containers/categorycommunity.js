@@ -10,9 +10,15 @@ selectLabel,  }) => {
                 <img src={author.image || '/img/favi.jpg'} alt={author.name} />
 
                 </div>
+                {data === 'Orphan' ?
+                <h3 className="community-h3 mb-2 mt-3">
+                {selectedAuthors.includes(author.name) && <span>&#10003;</span>} {author.orphan_name ? author.orphan_name : '-'}
+              </h3>
+                :
                 <h3 className="community-h3 mb-2 mt-3">
                   {selectedAuthors.includes(author.name) && <span>&#10003;</span>} {author.name ? author.name : '-'}
                 </h3>
+                  }
                 {data === 'Orphan' ?
                 <>
                  <div className="community-icons">
@@ -32,9 +38,15 @@ selectLabel,  }) => {
                 {/* ... (other content) */}
                 <div className="button-boxes">
                   <div className="row">
+                  {data === 'Orphan' ?
+                  <div onClick={() => handleSellerClick(author.orphan_name)} className="col-lg-6 col-6 view-package-btn">
+                  <button className="community-button"> View Details</button>
+                </div>
+                :
                   <div onClick={() => handleSellerClick(author.name)} className="col-lg-6 col-6 view-package-btn">
           <button className="community-button"> View Details</button>
         </div>
+          }
         <div
           className={`col-lg-6 col-6 view-package-btn checkbox`}
           onClick={() => handleSelectButtonClick(author)}

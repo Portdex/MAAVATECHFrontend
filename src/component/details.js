@@ -46,9 +46,7 @@ const Details = ({ authorId }) => {
   const { username } = useParams();
   const [userData, setUserData] = useState([])
   const [storeData, setStoreData] = useState([])
-  console.log('category',storeData)
   const [serviceData, setServiceData] = useState([])
-  console.log("userData",userData)
   const [loading , setLoading]= useState(false)
   const [openMenu, setOpenMenu] = React.useState(true);
   const [openMenu1, setOpenMenu1] = React.useState(false);
@@ -56,7 +54,6 @@ const Details = ({ authorId }) => {
   const [openMenu3, setOpenMenu3] = React.useState(false);
   const navigate = useNavigate();
   const [school, setSchool] = useState([]);
-  console.log('school' , school)
   const [colleges, setColleges] = useState([]);
   const [universities, setUniversities] = useState([]);
   const [consultant, setConsultant] = useState([]);
@@ -64,6 +61,9 @@ const Details = ({ authorId }) => {
   const [userCity, setUserCity] = useState('');
   const [userLocation, setUserLocation] = useState({});
   const [selectedCity, setSelectedCity] = useState("");
+  const [orphan, setOrphan] = useState([]);
+  console.log('userData' , userData)
+
   const getUserCity = async () => {
     setLoading(true)
     try {      
@@ -117,13 +117,35 @@ const Details = ({ authorId }) => {
       }, 5000); // Set loading to false when data is fetched
     }
   };
+  const fetchOrphan = async () => {
+    setLoading(true)
+    try {
+      fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Assuming the response is in JSON format
+      })
+      .then(data => {
+        data=data.data;
+        // Update the state with the fetched data
+        setOrphan(data)
+        // setUserData(data.find((product) => product.name === username));
+      })
+    }
+    catch (error) {
+      console.error('Error getting data for the selected city:', error);
+      // Handle errors as needed
+    }
+
+};
  
     useEffect(() => {
       setLoading(true);
       const storedData = localStorage.getItem("category");
       if (storedData) {
         setStoreData(storedData);
-        console.log(storeData);
       }
       if (storeData === "College") {
         const product = colleges.find((product) => product.name === username);
@@ -165,22 +187,8 @@ const Details = ({ authorId }) => {
         setUserData(product);
       }
       else if (storeData === "Orphan") {
-        fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json(); // Assuming the response is in JSON format
-        })
-        .then(data => {
-          data=data.data;
-          // Update the state with the fetched data
-          setUserData(data.find((product) => product.name === username));
-        })
-        .catch(err => {
-          // Handle errors
-          setError(err);
-        });
+        const product = orphan.find((product) => product.orphan_name === username);
+        setUserData(product);
       }
       else if (storeData === "Blood") {
         const product = Orphans.find((product) => product.name === username);
@@ -203,6 +211,9 @@ const Details = ({ authorId }) => {
     }, [storeData, username ,getUserCity ]); 
     useEffect(() => {
       getUserCity();
+    }, []);
+    useEffect(() => {
+      fetchOrphan();
     }, []);
   
     useEffect(() => {
@@ -282,10 +293,10 @@ return (
         <div className="col-md-10 d-flex align-items-center">
         <div className="profile_name">
                           <h4>
-                            {userData?.name}      
+                            {userData?.orphan_name ?userData?.orphan_name:userData?.name }      
                                                           
-                              <span className="profile_username">{userData?.label}</span>
-                              <span className="profile_username text-muted">{userData?.name} &nbsp; <ShareButton link={linkToShare} /></span>
+                              <span className="profile_username">{userData?.email? userData?.email : ""} &nbsp; <ShareButton link={linkToShare} /></span>
+                              {/* <span className="profile_username text-muted">{userData?.email? userData?.email : ""} &nbsp; <ShareButton link={linkToShare} /></span> */}
                               {storeData === 'Orphan' ? <></> : 
                               <div className="community-icons">
     <i className="f-size fa fa-fw fa-facebook" aria-hidden="true" title="Copy to use facebook-square"></i>
@@ -325,13 +336,25 @@ return (
         <div id='zero1' className='onStep fadeIn mob-margin'>
          {userLocation ?
          <>
-         {/* <h6>
+         {userData?.city ?
+         <>
+         <h6>
           City: 
          </h6>
          <p>
-          {userCity ? userCity : ""}
-         </p> */}
-         
+          {userData?.city ? userData?.city : ""}
+         </p>
+        </>
+         :
+         <></>
+         }
+         {userData?.phone_number ?
+          <>
+          <h6> Phone Number: </h6>
+          <p>{userData?.phone_number }</p>
+          </>
+          :
+          <></>}
           {userData?.vicinity ?
           <>
           <h6> Address: </h6>
@@ -339,6 +362,21 @@ return (
           </>
           :
           <></>}
+           {userData?.amount_to_raise ?
+          <>
+          <h6> Amount to raise: </h6>
+          <p>{userData?.amount_to_raise}</p>
+          </>
+          :
+          <></>}
+          {userData?.description ?
+          <>
+          <h6> Description: </h6>
+          <p>{userData?.description}</p>
+          </>
+          :
+          <></>}
+          
           {userData?.rating ?
           <>
           <h6>
