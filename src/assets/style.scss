@@ -344,6 +344,16 @@ section .small-border {
   {
    display:none
   }
+  .mob-margin
+  {
+    margin-left: 16px;
+    margin-bottom: 40px;
+  }
+  .community-column
+  {
+    width:80% !important;
+    margin:auto !important;
+  }
   .mobile-view
   {
    display:block !important;

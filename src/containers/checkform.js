@@ -1,22 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import axios from 'axios';
 
 function Checkform() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Define the URL you want to fetch data from
+    const url = 'https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getAdmissions';
+
+    // Fetch data from the URL
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the response is in JSON format
+      })
+      .then(data => {
+        setData(data);
+        console.log('data' , data) // Update the state with the fetched data
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
   const [formData, setFormData] = useState({
-    name: 'alex',
+    name: 'mubashira',
     email: 'mubashiraiqbal786@gmail.com',
-    address: '1234street',
-    city: 'london',
-    orphan_name: ' brian',
-    amount_to_raise:'33444',
+    country: 'pakistan',
+    grade: ' graduate',
+    lookingFor:'university',
     description: 'testing',
-    phone_number: '+223243211',
-    photo_path:'123.jpg',
+    phoneNumber: '+223243211',
+    
     // Add other fields as needed
   });
 
   const handleSubmit = () => {
-    axios.post('https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createFundRaiseEntry', formData)
+    axios.post('https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createPost', formData)
     .then((response) => {
       if (response.status === 200) {
         // Handle a successful response

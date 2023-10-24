@@ -10,7 +10,6 @@ import RaiseFunds from './pages/fund';
 import Homework from './component/Homework';
 import Main from './component/main';
 import Login from './pages/auth/Login';
-import CheckLocation2 from './containers/CheckLocation2';
 import Confirmation from './pages/auth/Confirmation';
 import Profile from './component/Profile';
 import { Amplify, Storage } from 'aws-amplify';
@@ -20,12 +19,12 @@ import awsmobile from './constants/aws-exports';
 import SchoolTimeline from './component/SchoolTimeline';
 import FirstView from './pages/FirstView';
 import Header from './menu/Header';
-import StepByStepForm from './component/SchoolForm';
 import { Fragment } from 'react';
 import Schools from './component/getschools';
 import { ToastProvider } from 'react-toast-notifications'
 import LookingFor from './pages/lookingfor';
 import Checkform from './containers/checkform';
+import AdmissionForm from './pages/admissionForm';
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -54,7 +53,6 @@ const App=()=> (
       <Route path="/home" element={<Home />} />
       {/* <Route path='/register' element={<React.Fragment><Register /></React.Fragment>} /> */}
       {/* <Route path="/checkform" element={<StepByStepForm />} /> */}
-      <Route path="/check2" element={<CheckLocation2 />} />
       <Route path="/timeline" element={<SchoolTimeline />} />
       <Route element={<Details />} path="/seller/:username" />
       <Route element={<Profile />} path="/profile" />

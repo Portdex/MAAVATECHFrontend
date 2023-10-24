@@ -122,7 +122,8 @@ return (
       <div className="container-fluid d-flex align-items-center">
         <div className="row">
           <div className="col-lg-12 col-md-12">
-            <h2 className="display-2 text-white">Hello {userData?.name}</h2>
+            {/* <h4 className="display-2 text-white">Hello {userData?.name}</h4> */}
+            <h4 className=" text-white">Hello {userData?.name}</h4>
             <p className="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
           </div>
         </div>
@@ -148,12 +149,7 @@ return (
                 <h6 className="heading-small text-muted mb-4">User information</h6>
                 <div className="pl-lg-4">
                   <div className="row">
-                    <div className="col-lg-6">
-                      <div className="form-group focused">
-                        <label className="form-control-label" for="input-username">Username</label>
-                        <input type="text" id="input-username" disabled className="form-control form-control-alternative" placeholder="Username" value={userData?.name}/>
-                      </div>
-                    </div>
+                  
                     <div className="col-lg-6">
                       <div className="form-group">
                         <label className="form-control-label" for="input-email">Email address</label>
@@ -161,14 +157,7 @@ return (
                       </div>
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col-lg-6">
-                      <div className="form-group focused">
-                        <label className="form-control-label" for="input-first-name">PhoneNumber</label>
-                        <input type="text" disabled id="input-first-name" className="form-control form-control-alternative" placeholder="First name" value={userData?.phone_number}/>
-                      </div>
-                    </div>
-                  </div>
+                 
                 </div>
                 <hr className="my-4"/>
                 {/* <!-- Address --> */}
@@ -182,7 +171,7 @@ return (
             <img src={post.image? post.image : '/img/favi.jpg'} alt="" />
           </Col>
           <Col className='col-10 headline-text'>
-            <h4>{post.orphanName ? post.orphanName : '-'}</h4>
+            <h4>{post.orphan_name ? post.orphan_name : '-'}</h4>
             <p>
               {post.description ? post.description : '-'}
             </p>

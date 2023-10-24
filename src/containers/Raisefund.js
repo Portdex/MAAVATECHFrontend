@@ -2,12 +2,11 @@ import React, { useState ,useEffect} from 'react'
 import axios from 'axios'
 import md5 from 'md5'
 import { useDispatch } from 'react-redux'
-import { Auth } from 'aws-amplify'
+import { Auth, Storage } from 'aws-amplify'
 import {  useNavigate } from 'react-router-dom'
 import RaiseFundsComponent from '../component/RaiseFund'
 import { fund } from '../actions/fund'
 import { useToasts } from 'react-toast-notifications';
-
 const RaiseFunds = () => {
   const dispatch = useDispatch()
   const [name, setName] = useState('')
@@ -20,23 +19,43 @@ const RaiseFunds = () => {
   const [phone, setPhone] = useState('')
   const [photopath, setPhotopath] = useState('')
   const [userAuth, setUserAuth] = useState('')
+  const [file, setFile] = useState('');
   const { addToast } = useToasts()
   const navigate=useNavigate()
 //   const [birthDate, setBirthDate] = useState(new Date())
-  const userData = {    
-    name:name,
-    email: currentEmail ? currentEmail : email,
-    city:city,
-    orphan_name:orphanName,
-    description:description,
-    amount_to_raise:amount,
-    phone_number:phone,
-    photo_path:photopath,
+  // const userData = {    
+  //   name:name,
+  //   email: currentEmail ? currentEmail : email,
+  //   city:city,
+  //   orphan_name:orphanName,
+  //   description:description,
+  //   amount_to_raise:amount,
+  //   phone_number:phone,
+  // }
+  const handleFileUpload = (e) => {    
+    //setFile (e.target.files[0]);
+    console.log(e)
   }
   const handleData = async (event) => {
     event.preventDefault();
     try {    
-      let session = await Auth.currentSession();   
+      let session = await Auth.currentSession(); 
+      // let username=await session.getIdToken().payload.sub;
+      // let path=username + "/" + "post.jpg"
+      // const result = await Storage.put(path, file, {
+      //   contentType: file.type,
+      // });
+      const userData = {    
+        name:name,
+        email: currentEmail ? currentEmail : email,
+        city:city,
+        orphan_name:orphanName,
+        description:description,
+        amount_to_raise:amount,
+        phone_number:phone,
+        // photo_path:path
+      }
+      console.log(userData)
     if(session){ 
       dispatch(fund(userData));      
       const response = axios({
@@ -45,6 +64,7 @@ const RaiseFunds = () => {
         data: userData,
         crossDomain: true,
       });
+      // setFile(path)
       console.log("response " , response)
       addToast('Your form is submitted succesfully', {
         appearance: 'success',
@@ -84,10 +104,13 @@ const RaiseFunds = () => {
       setAmount={setAmount}
       phone={phone}
       setPhone={setPhone}
+      file={file}
+      setFile={setFile}
       orphanName={orphanName}
       setOrphanName={setOrphanName}
       handleData={handleData}
-      userData={userData}
+      handleFileUpload={handleFileUpload}
+  
     />
   )
 }
