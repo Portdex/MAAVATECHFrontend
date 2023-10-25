@@ -25,8 +25,8 @@ const AdmissionForm = () => {
     father_name : fatherName,
     grade : grade,
     address : address,
-    dob : DOB , 
-    place : birthPlace,
+    date_of_birth : DOB , 
+    city : birthPlace,
 
   }
   const handleData = async (event) => {

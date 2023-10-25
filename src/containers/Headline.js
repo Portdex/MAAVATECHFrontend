@@ -16,6 +16,7 @@ const Headline = () => {
       .then(data => {
         data = data.data;
         // Filter data where the email matches currentEmail
+        data.sort((a, b) => b.id - a.id);
         setPosts(data)
         setLoading(false);
       })

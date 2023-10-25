@@ -25,7 +25,7 @@ const LookingFor = () => {
     name:name,
     email: currentEmail ? currentEmail : email,
     country:country?.name,
-    lookingFor:lookingFor,
+    looking_for:lookingFor,
     description:description,
     grade:grade,
     phone_number:phone,
@@ -36,13 +36,13 @@ const LookingFor = () => {
       let session = await Auth.currentSession();   
     if(session){ 
       dispatch(lookingfor(userData));      
-      // const response = axios({
-      //   method: 'post',
-      //   url: 'https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createPost',
-      //   data: userData,
-      //   crossDomain: true,
-      // });
-      // console.log('response' , response)
+      const response = axios({
+        method: 'post',
+        url: 'https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createPost',
+        data: userData,
+        crossDomain: true,
+      });
+      console.log('response' , response)
       addToast('Your form is submitted succesfully', {
         appearance: 'success',
         autoDismiss: true,
