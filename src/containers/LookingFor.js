@@ -47,7 +47,7 @@ const LookingFor = () => {
         appearance: 'success',
         autoDismiss: true,
       })
-      navigate('/profile')
+      navigate('/timeline')
     }
     else {
       navigate('/login')
