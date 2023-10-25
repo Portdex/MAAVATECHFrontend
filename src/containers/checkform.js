@@ -37,22 +37,22 @@ function Checkform() {
   });
 
   const handleSubmit = () => {
-    axios.post('https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createPost', formData)
-    .then((response) => {
-      if (response.status === 200) {
-        // Handle a successful response
-        console.log('Data successfully posted:', response.data);
-      } else {
-        // Handle other status codes or potential API errors
-        console.error('API responded with status:', response.status);
-        console.log('API response data:', response.data);
-      }
-    })
-    .catch((error) => {
-      // Handle network errors or request errors
-      console.error('Error posting data:', error);
-    });
-  
+    // axios.post('https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/createPost', formData)
+    // .then((response) => {
+    //   if (response.status === 200) {
+    //     // Handle a successful response
+    //     console.log('Data successfully posted:', response.data);
+    //   } else {
+    //     // Handle other status codes or potential API errors
+    //     console.error('API responded with status:', response.status);
+    //     console.log('API response data:', response.data);
+    //   }
+    // })
+    // .catch((error) => {
+    //   // Handle network errors or request errors
+    //   console.error('Error posting data:', error);
+    // });
+  console.log(formData)
   };
 
   return (

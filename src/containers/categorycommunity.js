@@ -39,24 +39,37 @@ selectLabel,  }) => {
                 <div className="button-boxes">
                   <div className="row">
                   {data === 'Orphan' ?
+                  <>
                   <div onClick={() => handleSellerClick(author.orphan_name)} className="col-lg-6 col-6 view-package-btn">
                   <button className="community-button"> View Details</button>
                 </div>
+                {author.phone_number && (
+          <div className="col-lg-6 col-6 view-package-btn checkbox">
+            <a
+              className="community-button"
+              href={`https://wa.me/${author.phone_number}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Contact
+            </a>
+          </div>
+        )}
+                </>
                 :
+                <>
                   <div onClick={() => handleSellerClick(author.name)} className="col-lg-6 col-6 view-package-btn">
           <button className="community-button"> View Details</button>
         </div>
+         <div
+         className={`col-lg-6 col-6 view-package-btn checkbox`}
+         onClick={() => handleSelectButtonClick(author)}
+       >
+         <button className="community-button"> Select </button>
+       </div>
+       </>
           }
-        <div
-          className={`col-lg-6 col-6 view-package-btn checkbox`}
-          onClick={() => handleSelectButtonClick(author)}
-        >
-          {data=== 'Orphan' ? 
-          <button className="community-button"> Contact </button>
-           :
-          <button className="community-button"> Select </button> 
-          }
-        </div>
+       
                   
                   </div>
                 </div>

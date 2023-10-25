@@ -36,7 +36,7 @@ const Category= () => {
   const cities = ["pakistan", "india", "uk", "us", "china"];
   const [selectedCity, setSelectedCity] = useState("");
   const [userLocation, setUserLocation] = useState({});
-
+  const [itemSelected, setItemSelected] = useState(false);
   useEffect(() => {
     setLoading(true)
     const storedData = localStorage.getItem("category");
@@ -147,6 +147,11 @@ const handleSelectButtonClick = (author) => {
     updatedSelectedAuthors = [...selectedAuthors, author.name];
   }
   setSelectedAuthors(updatedSelectedAuthors);
+  if (updatedSelectedAuthors.length > 0) {
+    setItemSelected(true);
+  } else {
+    setItemSelected(false);
+  }
   localStorage.setItem('selectedAuthors', JSON.stringify(updatedSelectedAuthors));
 };
 
@@ -188,6 +193,11 @@ const handleCountryChange = (selectedValue) => {
 
 const handleSchoolChange = (event) => {
   setSelectedSchool(event.target.value);
+  if (event.target.value) {
+    setItemSelected(true);
+  } else {
+    setItemSelected(false);
+  }
 };
 const handleButtonClick = () => {
 
@@ -452,7 +462,9 @@ const schools = selectedCountry
             onChange={handleInputChange}
             placeholder="Type your message..."
           />
-          <button type="button" onClick={handleButtonClick}>Next</button>
+          <button type="button" onClick={handleButtonClick} disabled={!itemSelected} className={itemSelected ? "" : "disabled"}> 
+  Next
+</button>
           <br/>
           <div>
           
