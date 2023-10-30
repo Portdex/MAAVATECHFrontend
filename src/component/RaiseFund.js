@@ -108,7 +108,7 @@ return (
         }) => (
       <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridName">
+            <Form.Group as={Col} xs={12} lg={6} md={6} controlId="formGridName">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
@@ -124,7 +124,7 @@ return (
                   onBlur={handleBlur}
               />
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col} xs={12} lg={6} md={6} controlId="formGridEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
@@ -141,7 +141,7 @@ return (
             </Form.Group>
           </Row>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridName">
+            <Form.Group as={Col} xs={12} lg={6} md={6} controlId="formGridName">
               <Form.Label>Orphan Name</Form.Label>
               <Form.Control
                 type="text"
@@ -155,7 +155,7 @@ return (
                 required
               />
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col} xs={12} lg={6} md={6} controlId="formGridEmail">
             <Form.Label>Phone Number</Form.Label>
             <PhoneInput
                       className='px-3 phone-input'
@@ -186,7 +186,7 @@ return (
               />
             </Form.Group>
             <Form.Group as={Col} xs={12} lg={6} md={6} controlId="formGridCity">
-              <Form.Label> How much are you looking for fund rising?</Form.Label>
+              <Form.Label> How much are you looking for fund raising?</Form.Label>
               <Form.Control
                 type="number"
                 name="amount"

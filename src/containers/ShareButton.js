@@ -20,7 +20,11 @@ const ShareButton = ({ link }) => {
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
-
+  const shareOnFacebook = () => {
+    const message = `Check out ${username}'s profile: ${shareLink}`;
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareLink)}`;
+    window.open(facebookUrl, '_blank');
+  };
   return (
     
       

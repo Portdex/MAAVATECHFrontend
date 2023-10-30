@@ -33,7 +33,7 @@ const SchoolTimeline = () => {
                    School Posts
                 </h3>
             </div>
-            {posts.map((post, index) => (
+            {/* {posts.map((post, index) => (
         <Row className='headline-row' key={index}>
           <Col className="col-2 headline-image">
           <img src={post.image? post.image : '/img/favi.jpg'} alt="" />
@@ -59,7 +59,7 @@ const SchoolTimeline = () => {
             </span>
           </Col>
         </Row>
-      ))}
+      ))} */}
             
         </div>
     </div>

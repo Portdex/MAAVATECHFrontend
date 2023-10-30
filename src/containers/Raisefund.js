@@ -32,17 +32,20 @@ const RaiseFunds = () => {
   //   amount_to_raise:amount,
   //   phone_number:phone,
   // }
-  const handleFileUpload = (e) => {    
-    //setFile (e.target.files[0]);
-    console.log(e)
-  }
+  const handleFileUpload = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    console.log('file' , file)
+  };
   const handleData = async (event) => {
     event.preventDefault();
     try {    
       let session = await Auth.currentSession(); 
-      // let username=await session.getIdToken().payload.sub;
-      // let path=username + "/" + "post.jpg"
-      // const result = await Storage.put(path, file, {
+      // const username = await session.getIdToken().payload.sub;
+      // const filePath = `${username}/post.jpg`;
+
+      // // Upload the selected file to S3
+      // await Storage.put(filePath, file, {
       //   contentType: file.type,
       // });
       const userData = {    
@@ -53,7 +56,7 @@ const RaiseFunds = () => {
         description:description,
         amount_to_raise:amount,
         phone_number:phone,
-        // photo_path:path
+        // photo_path:filePath
       }
       console.log(userData)
     if(session){ 

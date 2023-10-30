@@ -37,7 +37,7 @@ const Confirmation = () => {
           }
           else if (historyValue === 'posts')
           {
-            navigate('/lookingfor')
+            navigate('/postOptions')
           }
           else if (historyValue === 'profile')
           {

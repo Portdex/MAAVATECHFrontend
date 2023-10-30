@@ -1,10 +1,11 @@
 import React , {useEffect , useState} from 'react';
 import { Col, Row } from 'react-bootstrap';
-
+import { useNavigate } from 'react-router-dom';
 const Headline = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
       .then(response => {
@@ -24,7 +25,10 @@ const Headline = () => {
         setError(err);
         setLoading(false);
       });
-  }, []); 
+  }, []);
+  const handleReadMoreClick = (username) => {
+    navigate(`/details/${username}`);
+  }; 
       
   return (
     <div className="headline-segment">
@@ -45,8 +49,11 @@ const Headline = () => {
             {post.description ? post.description : 'consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'}
             </p>
             <p>
-              {post.amount_to_raise ? post.amount_to_raise : '-'}
+            <a  onClick={() => handleReadMoreClick(post.orphan_name)} className='color-blue cursor-pointer'>
+              Read More
+            </a>
             </p>
+           
             <span className='category-tag'>
             {post.name ? post.name : '-'}
               <i className="fas fa-circle"></i>

@@ -10,6 +10,7 @@ import CountrySelect from 'react-bootstrap-country-select';
 import '../assets/forms.css'
 import { Auth } from "aws-amplify";
 import { lookingfor } from "../actions/lookingfor";
+import {Country, State, City} from 'country-state-city';
 
 const GlobalStyles = createGlobalStyle`
 .navbar {
@@ -55,10 +56,24 @@ const LookingFor = ({
   setPhone,
   country , 
   setCountry,
+  city,
+  setCity,
+  countryCode,
+  setCountryCode,
   currentEmail,
   setCurrentEmail,  
   handleData,
+  handleCountryChange,
+  handleCityChange,
+  getCitiesForSelectedCountry,
+  countries,
 }) => {
+
+
+
+  // Function to fetch cities based on the selected country
+ 
+
   useEffect(()=>{
     Auth.currentAuthenticatedUser()
         .then(data => {
@@ -94,14 +109,7 @@ return (
      
       <h3 className="m-3 text-center mb-4 mt-5"> Post </h3>
       <div className="indicator mx-auto mb-3">
-    {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className={`step-indicator ${step === index + 1 ? 'active' : ''}`}
-          >
-            {index + 1}
-          </div>
-        ))}
+   
         </div>
         <Formik 
       initialValues={{
@@ -236,12 +244,28 @@ return (
         
         <Form.Group as={Col} xs={12} controlId="formGridAddress1">
         <Form.Label className="w-100">Country</Form.Label>
-        <CountrySelect
+        {/* <CountrySelect
               name="country"
               value={country}
               onChange={setCountry}
               // You can add any additional props as needed
-            />
+            /> */}
+            <select className="country-select" onChange={handleCountryChange}>
+                  <option value="">-- Select a Country --</option>
+                  {countries.map((country) => (
+                    <option key={country.id} value={country.isoCode} label={country.name}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
+                <select className="country-select" onChange={handleCityChange}>
+                  <option value="">-- Select a City --</option>
+                  {getCitiesForSelectedCountry(countryCode).map((city) => (
+                    <option key={city.id} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+                </select>
       </Form.Group>
       <button className='next-button' type="button" onClick={handlePrevStep}>
               Previous
