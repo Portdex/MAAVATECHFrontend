@@ -54,7 +54,8 @@ const Profile = ({ authorId }) => {
 const [currentEmail, setCurrentEmail]=useState('')
 const [userData, setUserData]=useState('')
 const [post, setPost] = useState([]);
-console.log(post)
+const [admission, setAdmission] = useState([]);
+console.log(admission)
 const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 //  if (toastMessage) {
@@ -94,8 +95,30 @@ Auth.currentAuthenticatedUser()
         .then(data => {
           data = data.data;
           // Filter data where the email matches currentEmail
+          data.sort((a, b) => b.id - a.id);
           const filteredData = data.filter(item => item.email === currentEmail);
           setPost(filteredData);
+          setLoading(false);
+        })
+        .catch(err => {
+          setError(err);
+          setLoading(false);
+        });
+    }, [currentEmail]); 
+    useEffect(() => {
+      fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getPosts")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then(data => {
+          data = data.data;
+          data.sort((a, b) => b.id - a.id);
+          // Filter data where the email matches currentEmail
+          const filteredData = data.filter(item => item.email === currentEmail);
+          setAdmission(filteredData);
           setLoading(false);
         })
         .catch(err => {
@@ -140,7 +163,7 @@ return (
                   <h3 className="mb-0">My account</h3>
                 </div>
                 <div className="col-4 text-right">
-                  <a onClick={handleLogout} className="btn btn-sm btn-primary">Logout</a>
+                  <a onClick={handleLogout} className="btn btn-sm btn-primary text-white">Logout</a>
                 </div>
               </div>
             </div>
@@ -161,9 +184,9 @@ return (
                 </div>
                 <hr className="my-4"/>
                 {/* <!-- Address --> */}
- 
-                {/* <!-- Description --> */}
-                <h6 className="heading-small text-muted mb-4">My Timeline</h6>
+              </form>
+            {/* <!-- Description --> */}
+            <h6 className="heading-small text-muted mb-4">My Posts</h6>
                 <div className="pl-lg-4">
                 {post.map((post, index) => (
         <Row className='headline-row' key={index}>
@@ -185,13 +208,45 @@ return (
             <span className="date">
               {post.city ? post.city : '-'}
             </span>
+            <div className="col-4 text-right float-right">
+                  <a className="btn btn-sm btn-danger text-white">Delete</a>
+                </div>
           </Col>
         </Row>
       ))}
                 </div>
-              
-              </form>
-            
+                <hr className="my-4"/>
+                {/* <!-- Description --> */}
+                <h6 className="heading-small text-muted mb-4">Admissions</h6>
+                <div className="pl-lg-4">
+                {admission.map((post, index) => (
+        <Row className='headline-row' key={index}>
+        <Col className="col-2 headline-image">
+        <img src={post.image? post.image : '/img/favi.jpg'} alt="" />
+        </Col>
+        <Col className='col-10 headline-text'>
+          <h4>{post.name ? post.name : '-'}</h4>
+          <p>
+          {post.description ? post.description : 'No description Available'}
+          </p>
+          <h4 className='mb-0'>Looking For:</h4>
+          <p className='mb-0'>
+            {post.looking_for ? post.looking_for : '-'}
+          </p>
+          <p className='mb-0'>
+            {post.grade ? post.grade : '-'}
+          </p>
+          <span className='category-tag'>
+          {post.email ? post.email : '-'}
+            <i className="fas fa-circle"></i>
+          </span>
+          <span className="date">
+          {post.country ? post.country : '-'}
+          </span>
+        </Col>
+      </Row>
+      ))}
+                </div>
           </div>
         </div>
       </div>

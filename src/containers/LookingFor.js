@@ -7,12 +7,14 @@ import {  useNavigate } from 'react-router-dom'
 import LookingForComponent from '../component/Lookingfor'
 import { lookingfor } from '../actions/lookingfor'
 import { useToasts } from 'react-toast-notifications';
-
+import {Country, State, City} from 'country-state-city';
 const LookingFor = () => {
   const dispatch = useDispatch()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [country, setCountry] = useState('')
+  const [city, setCity] = useState('')
+  const [countryCode, setCountryCode] = useState('')
   const [lookingFor, setLookingFor] = useState('')
   const [description, setDescription] = useState('')
   const [grade, setGrade] = useState('')
@@ -24,13 +26,32 @@ const LookingFor = () => {
   const userData = {    
     name:name,
     email: currentEmail ? currentEmail : email,
-    country:country?.name,
+    country:country,
+    city:city,
     looking_for:lookingFor,
     description:description,
     grade:grade,
     phone_number:phone,
   }
   console.log("userData" , userData)
+  const countries = Country.getAllCountries();
+  const getCitiesForSelectedCountry = (countryCode) => {
+    const cities = City.getCitiesOfCountry(countryCode);
+    console.log(cities)
+    return cities;
+  };
+  const handleCountryChange = (event) => {
+    const selectedCountryCode = event.target.value;
+    setCountryCode(selectedCountryCode);
+    const selectedCountryObject = countries.find((country) => country.isoCode === selectedCountryCode);
+    const selectedCountryName = selectedCountryObject ? selectedCountryObject.name : "";
+    setCountry(selectedCountryName);
+    setCity(null);
+    };
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+  };
   const handleData = async () => {
             try {
       let session = await Auth.currentSession();   
@@ -47,7 +68,7 @@ const LookingFor = () => {
         appearance: 'success',
         autoDismiss: true,
       })
-      navigate('/timeline')
+      navigate('/profile')
     }
     else {
       navigate('/login')
@@ -70,6 +91,10 @@ const LookingFor = () => {
       setEmail={setEmail}
       country={country}
       setCountry={setCountry}
+      city={city}
+      setCity={setCity}
+      countryCode={countryCode}
+      setCountryCode={setCountryCode}
       currentEmail={currentEmail}
       setCurrentEmail={setCurrentEmail}
       description={description}
@@ -81,6 +106,10 @@ const LookingFor = () => {
       grade={grade}
       setGrade={setGrade}
       handleData={handleData}
+      handleCityChange={handleCityChange}
+      handleCountryChange={handleCountryChange}
+      countries={countries}
+      getCitiesForSelectedCountry={getCitiesForSelectedCountry}
     />
   )
 }

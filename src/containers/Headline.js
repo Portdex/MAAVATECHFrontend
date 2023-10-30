@@ -45,8 +45,11 @@ const Headline = () => {
             {post.description ? post.description : 'consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.'}
             </p>
             <p>
-              {post.amount_to_raise ? post.amount_to_raise : '-'}
+            <a className='color-blue cursor-pointer'>
+              Read More
+            </a>
             </p>
+           
             <span className='category-tag'>
             {post.name ? post.name : '-'}
               <i className="fas fa-circle"></i>

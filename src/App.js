@@ -25,6 +25,8 @@ import { ToastProvider } from 'react-toast-notifications'
 import LookingFor from './pages/lookingfor';
 import Checkform from './containers/checkform';
 import AdmissionForm from './pages/admissionForm';
+import PostOptions from './component/postOptions';
+import Checks from './component/Check';
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -43,7 +45,7 @@ const App=()=> (
       <Routes >
       <Route path="/" element={<FirstView />} />
       <Route path="/main" element={<Main />} />
-      <Route path="/category" element={<Category />} />
+      <Route path="/category/:label" element={<Category />} />
       <Route path="/admissionForm" element={<AdmissionForm />} />
       <Route path="/RaiseFund" element={<RaiseFunds />} />
       <Route path="/Login" element={<Login/>} />
@@ -54,10 +56,12 @@ const App=()=> (
       {/* <Route path='/register' element={<React.Fragment><Register /></React.Fragment>} /> */}
       {/* <Route path="/checkform" element={<StepByStepForm />} /> */}
       <Route path="/timeline" element={<SchoolTimeline />} />
-      <Route element={<Details />} path="/seller/:username" />
+      <Route element={<Details />} path="/details/:username" />
       <Route element={<Profile />} path="/profile" />
       <Route element={<Checkform />} path="/form" />
-      <Route element={<LookingFor />} path="/lookingfor" />
+      <Route element={<LookingFor />} path="/applyForAdmission"/>
+      <Route element={<PostOptions />} path="/postOptions"/>
+      <Route element={<Checks />} path="/Check"/>
       <Route element={<Schools />} path="/getschools/:username" />
       
 

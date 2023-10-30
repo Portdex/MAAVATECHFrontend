@@ -41,7 +41,7 @@ const Carousel = () => {
 	  const handleTagClick = (label) => {
 		// Save the clicked label in local storage
 		localStorage.setItem('category', label);
-		navigate('/category')
+		navigate(`/category/${label}`)
 	  };
 
   return (
@@ -50,7 +50,7 @@ const Carousel = () => {
 			<div className="swiper-container swiper-init swiper-container-initialized swiper-container-horizontal" data-space-between="10" data-slides-per-view="auto">
 				<div className="swiper-wrapper" style={{transform: 'translate3d(0px, 0px, 0px)'}}>
 					{tags.map((tag, index)=>(
-						<div className="swiper-slide swiper-slide-active" style={{marginRight:'10px'}}>
+						<div key={tag.title} className="swiper-slide swiper-slide-active" style={{marginRight:'10px'}}>
 							{tag.title === 'School Portal' ?
 							<a href={tag.link} target="_blank">
 								<div className="mask"></div>
@@ -61,7 +61,7 @@ const Carousel = () => {
 									<span className="date">November 5</span> */}
 								</div>
 							</a>:
-							<a href={tag.link} onClick={() => handleTagClick(tag.label)}>
+							<a onClick={() => handleTagClick(tag.label)}>
 								<div className="mask"></div>
 								<img src={tag.image} alt=""/>
 								<div className="image-caption">

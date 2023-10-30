@@ -667,6 +667,35 @@ ul.mobile-view.row > li > a:nth-child(2){
     width: 120px;
     display:inline-block
 }
+.color-blue
+{
+  color:blue !important;
+}
+.buttons-container
+{
+  padding-top: 70px;
+
+}
+.buttons
+{
+    margin: 4px;
+    background-color: #f1f1f1;
+    border-radius:10px;
+    height: 165px;
+    width: 157px;
+    padding: 30px;
+    text-align: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.category-buttons
+{
+  border: 2px solid #a993ff;
+  border-radius: 10px;
+  padding: 7px;
+}
 .community-icons {
   // display: flex;
   // justify-content: space-around;
@@ -1155,9 +1184,16 @@ p.lead {
   padding: 10px;
   margin: 10px
 }
+.country-select
+{
+  border-radius: 6px;
+  padding: 9px;
+  margin-right: 20px;
+  margin-top:10px
+}
 .next-button
 {
-  width: 150px;
+  width: 100px;
   margin-top: 30px;
   /* border: 1px solid #913eff; */
   /* border: none; */

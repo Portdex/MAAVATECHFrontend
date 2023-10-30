@@ -47,7 +47,7 @@ const Details = ({ authorId }) => {
   const [userData, setUserData] = useState([])
   const [storeData, setStoreData] = useState([])
   const [serviceData, setServiceData] = useState([])
-  const [loading , setLoading]= useState(false)
+  const [loading , setLoading]= useState(true)
   const [openMenu, setOpenMenu] = React.useState(true);
   const [openMenu1, setOpenMenu1] = React.useState(false);
   const [openMenu2, setOpenMenu2] = React.useState(false);
@@ -65,7 +65,6 @@ const Details = ({ authorId }) => {
   console.log('userData' , userData)
 
   const getUserCity = async () => {
-    setLoading(true)
     try {      
       
       if (navigator.geolocation) {
@@ -93,12 +92,11 @@ const Details = ({ authorId }) => {
       console.error('Error getting user city:', error);
       setUserLocation({})
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 5000);
   };
   const fetchDataForCity = async (selectedCity) => {
-    setLoading(true)
     try {
       const schoolDataResponse = await axios.get(
         `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchoolsByLatitude/${selectedCity.latitude}/longitude/${selectedCity.longitude}`
@@ -111,14 +109,13 @@ const Details = ({ authorId }) => {
       console.error('Error getting data for the selected city:', error);
       // Handle errors as needed
     }
-    finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 5000); // Set loading to false when data is fetched
-    }
+    // finally {
+    //   setTimeout(() => {
+    //     setLoading(false);
+    //   }, 5000); // Set loading to false when data is fetched
+    // }
   };
   const fetchOrphan = async () => {
-    setLoading(true)
     try {
       fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
       .then(response => {
@@ -140,7 +137,7 @@ const Details = ({ authorId }) => {
     }
 
 };
- 
+
     useEffect(() => {
       setLoading(true);
       const storedData = localStorage.getItem("category");
@@ -202,27 +199,25 @@ const Details = ({ authorId }) => {
         const product = Orphans.find((product) => product.name === username);
         setUserData(product);
       }
-  
-      
-  
       window.scrollTo(0, 0);
       // fetchData();
-      setLoading(false);
+     setLoading(false)
     }, [storeData, username ,getUserCity ]); 
+ 
     useEffect(() => {
       getUserCity();
     }, []);
     useEffect(() => {
       fetchOrphan();
     }, []);
-  
+    
     useEffect(() => {
      setLoading(true)
       if (userLocation) {
         fetchDataForCity(userLocation);      
       }
     }, [userLocation]);
-    
+     
   const handleBtnClick = () => {
     setOpenMenu(!openMenu);
     setOpenMenu1(false);
@@ -351,7 +346,15 @@ return (
          {userData?.phone_number ?
           <>
           <h6> Phone Number: </h6>
-          <p>{userData?.phone_number }</p>
+          <p>
+          <a
+              href={`https://wa.me/${userData.phone_number}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {userData.phone_number}
+            </a>
+          </p>
           </>
           :
           <></>}

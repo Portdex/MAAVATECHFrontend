@@ -8,7 +8,7 @@ const Trending = () => {
 	
       const handleCategory = (category) => {
         localStorage.setItem("category", category);
-        navigate('/category');
+        navigate(`/category/${category}`);
       };
       const itemHandlers = {
         Schools: () => handleCategory("School"),
@@ -46,7 +46,7 @@ const Trending = () => {
 		<div className="swiper-container swiper-init 			    swiper-container-initialized swiper-container-horizontal" data-space-between="10" data-slides-per-view="auto">
 				<div className="swiper-wrapper" style={{transform: 'translate3d(0px, 0px, 0px)'}}>
 				  {fields.map((field, index)=>(
-				    <div className="cursor-pointer swiper-slide swiper-slide-active" style={{marginRight:'10px'}}>
+				    <div key={field.label} className="cursor-pointer swiper-slide swiper-slide-active" style={{marginRight:'10px'}}>
 						<a onClick={() => handleItemClick(field)}>
 							<div className="mask"></div>
 							<img src={field.image} alt=""/>

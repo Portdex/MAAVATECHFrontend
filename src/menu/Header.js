@@ -9,22 +9,22 @@ function Header() {
 const navigate = useNavigate()
   const handleSchoolClick = () => {
     localStorage.setItem("category", "School");
-    navigate('/category');
+    navigate('/category/School');
     window.location.reload();
   };
   const handleUniversityClick = () => {
     localStorage.setItem("category", "University");
-    navigate('/category');
+    navigate('/category/University');
     window.location.reload();
   };
   const handleBookClick = () => {
     localStorage.setItem("category", "Book");
-    navigate('/category');
+    navigate('/category/Book');
     window.location.reload();
   };
   const handleOrphanClick = () => {
     localStorage.setItem("category", "Orphan");
-    navigate('/category');
+    navigate('/category/Orphan');
     window.location.reload();
   };
   const handlePostClick = async () => {
@@ -32,7 +32,7 @@ const navigate = useNavigate()
     try {
       let session = await Auth.currentSession();   
     if(session){ 
-     navigate('/lookingfor')
+     navigate('/postOptions')
      setLoading(false)
     }
     else {
