@@ -47,7 +47,7 @@ const Details = ({ authorId }) => {
   const [userData, setUserData] = useState([])
   const [storeData, setStoreData] = useState([])
   const [serviceData, setServiceData] = useState([])
-  const [loading , setLoading]= useState(true)
+  const [loading , setLoading]= useState(false)
   const [openMenu, setOpenMenu] = React.useState(true);
   const [openMenu1, setOpenMenu1] = React.useState(false);
   const [openMenu2, setOpenMenu2] = React.useState(false);
@@ -59,52 +59,27 @@ const Details = ({ authorId }) => {
   const [consultant, setConsultant] = useState([]);
   const [error, setError] = useState(null);
   const [userCity, setUserCity] = useState('');
-  const [userLocation, setUserLocation] = useState({});
+  const [userLocation, setUserLocation] = useState('');
+  console.log('userLocation' , userLocation)
   const [selectedCity, setSelectedCity] = useState("");
   const [orphan, setOrphan] = useState([]);
   console.log('userData' , userData)
-
-  const getUserCity = async () => {
-    try {      
-      
-      if (navigator.geolocation) {
-        // get the current users location
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            // save the geolocation coordinates in two variables
-            const { latitude, longitude } = position.coords;
-            // update the value of userlocation variable
-            setUserLocation({ latitude, longitude });
-            
-          },
-          // if there was an error getting the users location
-          (error) => {
-            console.error('Error getting user location:', error);
-          }
-        );
-      }
-      // if geolocation is not supported by the users browser
-      else {
-        console.error('Geolocation is not supported by this browser.');
-      }
-          
-    } catch (error) {
-      console.error('Error getting user city:', error);
-      setUserLocation({})
+  useEffect(() => {
+    const location = localStorage.getItem("city");
+    if (location) {
+      setUserLocation(location);
     }
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 5000);
-  };
+  }, []);
   const fetchDataForCity = async (selectedCity) => {
     try {
       const schoolDataResponse = await axios.get(
-        `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchoolsByLatitude/${selectedCity.latitude}/longitude/${selectedCity.longitude}`
+        `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools/${userLocation}`
       );
       setSchool(schoolDataResponse.data.schools.results);
       setColleges(schoolDataResponse.data.colleges.results);
       setUniversities(schoolDataResponse.data.universities.results);
       setConsultant(schoolDataResponse.data.consultants.results);
+      console.log(schoolDataResponse.data)
     } catch (error) {
       console.error('Error getting data for the selected city:', error);
       // Handle errors as needed
@@ -137,9 +112,14 @@ const Details = ({ authorId }) => {
     }
 
 };
+useEffect(() => {
+  if (userLocation) {
+    fetchDataForCity(userLocation);  
+  }
+}, [userLocation]);
 
     useEffect(() => {
-      setLoading(true);
+      
       const storedData = localStorage.getItem("category");
       if (storedData) {
         setStoreData(storedData);
@@ -201,23 +181,15 @@ const Details = ({ authorId }) => {
       }
       window.scrollTo(0, 0);
       // fetchData();
-     setLoading(false)
-    }, [storeData, username ,getUserCity ]); 
+     
+    }, [storeData, username ,userLocation , fetchDataForCity ]); 
  
-    useEffect(() => {
-      getUserCity();
-    }, []);
+    
     useEffect(() => {
       fetchOrphan();
     }, []);
     
-    useEffect(() => {
-     setLoading(true)
-      if (userLocation) {
-        fetchDataForCity(userLocation);      
-      }
-    }, [userLocation]);
-     
+   
   const handleBtnClick = () => {
     setOpenMenu(!openMenu);
     setOpenMenu1(false);
@@ -331,13 +303,13 @@ return (
         <div id='zero1' className='onStep fadeIn mob-margin'>
          {userLocation ?
          <>
-         {userData?.city ?
+         {userLocation ?
          <>
          <h6>
           City: 
          </h6>
          <p>
-          {userData?.city ? userData?.city : ""}
+          {userLocation ? userLocation : ""}
          </p>
         </>
          :
@@ -358,10 +330,10 @@ return (
           </>
           :
           <></>}
-          {userData?.vicinity ?
+          {userData?.formatted_address ?
           <>
           <h6> Address: </h6>
-          <p>{userData?.vicinity}</p>
+          <p>{userData?.formatted_address}</p>
           </>
           :
           <></>}

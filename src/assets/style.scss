@@ -930,10 +930,18 @@ ul.desktop-view.row .row {
     padding: 0px !important;
     font-size: 14px !important;
   }
- 
+ .city-boxes
+ {
+  text-align: center !important;
+ }
   .margin-top-mobile
   {
-    margin-top:30px
+    margin-top:10px
+  }
+  .country-select
+  {
+    margin-right:0px !important;
+    width:220px !important;
   }
   .long-cards
   {
@@ -1189,7 +1197,8 @@ p.lead {
   border-radius: 6px;
   padding: 9px;
   margin-right: 20px;
-  margin-top:10px
+  margin-top:10px;
+  width:300px;
 }
 .next-button
 {
@@ -1203,7 +1212,7 @@ p.lead {
 }
 .city-boxes
 {
-  text-align:center;
+  // text-align:center;
 }
 .city-box {
   display: inline-block;
