@@ -11,10 +11,10 @@ import {
   Uniform, } from '../data/data';
 import Categorycommunity from '../containers/categorycommunity';
 import CountrySelect from 'react-bootstrap-country-select';
-import { Form } from 'react-bootstrap';
+import { Form , Col } from 'react-bootstrap';
 import axios from 'axios';
 import Loader from '../containers/Loader';
-
+import {Country, State, City} from 'country-state-city';
 const Category= () => {
   const [inputValue, setInputValue] = useState('');
   const [selectedAuthors, setSelectedAuthors] = useState([]);
@@ -26,96 +26,93 @@ const Category= () => {
   const [consultant, setConsultant] = useState([]);
   const [Orphan, setOrphan] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+  const [countryCode, setCountryCode] = useState('');
   const [error, setError] = useState(null);
   const location = useLocation();
   const navigate = useNavigate()
-  const cities = [
-    {
-      name: 'Karachi',
-      latitude: 24.8607533,
-      longitude: 67.0011377,
-    },
-    {
-      name: 'Lahore',
-      latitude: 31.5498,
-      longitude: 74.3436,
-    },
-    {
-      name: 'Islamabad',
-      latitude: 33.6844206,
-      longitude: 73.0478901,
-    },
-    {
-      name: 'Faisalabad',
-      latitude: 31.450365,
-      longitude: 73.135889,
-    },
-    {
-      name: 'Multan',
-      latitude: 30.1797529,
-      longitude: 71.5460455,
-    },
-    {
-      name: 'Peshawar',
-      latitude: 34.0151375,
-      longitude: 71.5249095,
-    },
-    {
-      name: 'Quetta',
-      latitude: 30.1797559,
-      longitude: 66.9758386,
-    },
-  ];
   const [selectedCity, setSelectedCity] = useState("");
-  console.log('selected' , selectedCity)
   const [userLocation, setUserLocation] = useState({});
+  console.log('userLocation' , userLocation)
   const [itemSelected, setItemSelected] = useState(false);
+  const [disabledLocation, setDisabledLocation] = useState(false);
   useEffect(() => {
     const storedData = localStorage.getItem("category");
     if (storedData) {
       setData(storedData);
     }
   }, []);
+  const countries = Country.getAllCountries();
+  const getCitiesForSelectedCountry = (countryCode) => {
+    const cities = City.getCitiesOfCountry(countryCode);
+    return cities;
+  };
+  const handleCountryChange = (event) => {
+    const selectedCountryCode = event.target.value;
+    setCountryCode(selectedCountryCode);
+    const selectedCountryObject = countries.find((country) => country.isoCode === selectedCountryCode);
+    const selectedCountryName = selectedCountryObject ? selectedCountryObject.name : "";
+    setCountry(selectedCountryName);
+    setCity(null);
+    };
+
+  const handleCityChange = (event) => {
+    setUserLocation(event.target.value);
+  };
   const getUserCity = async () => {
-    try {      
-      
+    try {
       if (navigator.geolocation) {
-        // get the current users location
         navigator.geolocation.getCurrentPosition(
-          (position) => {
-            // save the geolocation coordinates in two variables
+          async (position) => {
             const { latitude, longitude } = position.coords;
-            // update the value of userlocation variable
-            setUserLocation({ latitude, longitude });
-            
+            // Call the reverse geocoding API to get the city name
+            const apiKey = 'AIzaSyBrvLjLK6AcNCACeZZ2Ye-ZtFq2hpz2yT8';
+            const response = await fetch(
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+            );
+  
+            if (response.ok) {
+              const data = await response.json();
+              const cityData = data.results.find((result) =>
+                result.types.includes('locality')
+              );
+  
+              if (cityData) {
+                const city = cityData.address_components.find((component) =>
+                  component.types.includes('locality')
+                ).long_name;
+                setUserLocation(city);
+              } else {
+                setUserLocation({city: 'Unknown' });
+              }
+            } else {
+              console.error('Error getting city data from geocoding API');
+              setDisabledLocation(true);
+            }
           },
-          // if there was an error getting the users location
           (error) => {
             console.error('Error getting user location:', error);
+            setDisabledLocation(true);
           }
         );
-      }
-      // if geolocation is not supported by the users browser
-      else {
+      } else {
         console.error('Geolocation is not supported by this browser.');
+        setDisabledLocation(true);
       }
-          
     } catch (error) {
       console.error('Error getting user city:', error);
-      setUserLocation({})
+      setUserLocation({});
+      setDisabledLocation(true);
     }
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 5000);
   };
-
   // Function to fetch data for a given city
   const fetchDataForCity = async (userCity) => {
     setLoading(true)
     console.log("seelctedCity" , userCity)
     try {
       const schoolDataResponse = await axios.get(
-        `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchoolsByLatitude/${userCity.latitude}/longitude/${userCity.longitude}`
+        `https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getSchools/${userLocation}`
       );
       console.log(schoolDataResponse.data)
       // console.log("error" , error)
@@ -126,33 +123,21 @@ const Category= () => {
     } catch (error) {
       console.error('Error getting data for the selected city:', error);
       // Handle errors as needed
-     
     }
     setLoading(false)
-    
   };
-  
-
   useEffect(() => {
     getUserCity();
   }, []);
-
   useEffect(() => {
+    localStorage.setItem("city" , userLocation )
     if (userLocation) {
       fetchDataForCity(userLocation);  
     }
   }, [userLocation]);
-  
-  const handleCitySelect = (city) => {
-    const selectedCityInfo = cities.find((c) => c.name === city);
-    setSelectedCity(selectedCityInfo);
-
-    // Fetch data based on the selected city's latitude and longitude
-    fetchDataForCity(selectedCityInfo);
-    
-  };
   useEffect(() => {
     // setLoading(true)
+   
     fetch("https://153a5f6sbb.execute-api.eu-west-2.amazonaws.com/test/getFundRaiseForms")
       .then(response => {
         if (!response.ok) {
@@ -167,12 +152,6 @@ const Category= () => {
       .catch(err => {
         setError(err);
       })
-      // .finally(() => {
-      //   setTimeout(() => {
-      //         setLoading(false);
-      //       }, 5000);
-      // });
-      
   }, []);
   useEffect(() => {
     setInputValue(`I am looking for ${selectedAuthors.join(', ')}`);
@@ -198,14 +177,14 @@ const handleSelectButtonClick = (author) => {
   }
   localStorage.setItem('selectedAuthors', JSON.stringify(updatedSelectedAuthors));
 };
-const handleSchoolChange = (event) => {
-  setSelectedSchool(event.target.value);
-  if (event.target.value) {
-    setItemSelected(true);
-  } else {
-    setItemSelected(false);
-  }
-};
+// const handleSchoolChange = (event) => {
+//   setSelectedSchool(event.target.value);
+//   if (event.target.value) {
+//     setItemSelected(true);
+//   } else {
+//     setItemSelected(false);
+//   }
+// };
 const handleButtonClick = () => {
   if(data === 'Orphan')
   {
@@ -222,7 +201,6 @@ const handleForm = () => {
  
   return(
     <>
-
 <div className="containerchat">
     <div className="margin-left-sidebar p-0 responsive-flex">
     
@@ -233,18 +211,17 @@ const handleForm = () => {
         <button onClick={()=> handleForm()} className='category-buttons'>
           Raise Fund for Orphan
         </button>
-      <h6 className='text-center px-3 pt-3 pb-3 color-purple margin-top-mobile'>
+      <h6 className='text-center px-3 pt-3 pb-0 mb-0 color-purple margin-top-mobile'>
         Support Deseriving student/Orphan
         </h6> 
         </div>
          :
          <h6 className='text-center px-3 pt-5 pb-3 color-purple margin-top-mobile'>
-      Select the {data}s you want to send application in one-click. 
+      Select the {data} you want to send application in one-click. 
      </h6>
       }
       <div className="chat-messages d-flex justify-content-center flex-column">
- <div className="city-boxes mx-auto">
-      {cities.map((city) => (
+        {/* {cities.map((city) => (
         <div
           key={city.name}
           className={`city-box ${selectedCity === city ? 'selected' : ''}`}
@@ -252,8 +229,38 @@ const handleForm = () => {
         >
           {city.name}
         </div>
-      ))}
+      ))} */}
+        {disabledLocation ? 
+        <>
+        {data === 'School' || data === 'College' || data === 'University' || data === 'Consultant' ? 
+ <div className="city-boxes">
+      
+<form>
+<Form.Group as={Col} xs={12} controlId="formGridAddress1">
+            <select className="country-select" onChange={handleCountryChange}>
+                  <option value="">-- Select a Country --</option>
+                  {countries.map((country) => (
+                    <option key={country.id} value={country.isoCode} label={country.name}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
+                <select className="country-select" onChange={handleCityChange}>
+                  <option value="">-- Select a City --</option>
+                  {getCitiesForSelectedCountry(countryCode).map((city) => (
+                    <option key={city.id} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+                </select>
+      </Form.Group>
+</form>
     </div>
+    :
+    <></>
+                  }
+    </>
+    : <> </>}
     {loading ? <Loader/> :
       <>
       {data === "School" && (
