@@ -45,7 +45,7 @@ const App=()=> (
       <Routes >
       <Route path="/" element={<FirstView />} />
       <Route path="/main" element={<Main />} />
-      <Route path="/category/:label" element={<Category />} />
+      <Route path="/:label" element={<Category />} />
       <Route path="/admissionForm" element={<AdmissionForm />} />
       <Route path="/RaiseFund" element={<RaiseFunds />} />
       <Route path="/Login" element={<Login/>} />

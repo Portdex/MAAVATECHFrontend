@@ -8,7 +8,7 @@ const Trending = () => {
 	
       const handleCategory = (category) => {
         localStorage.setItem("category", category);
-        navigate(`/category/${category}`);
+        navigate(`/${category}`);
       };
       const itemHandlers = {
         Schools: () => handleCategory("School"),

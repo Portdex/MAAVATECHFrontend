@@ -303,6 +303,8 @@ return (
         <div id='zero1' className='onStep fadeIn mob-margin'>
          {userLocation ?
          <>
+          {storeData === 'School' || storeData === 'College' || storeData === 'University' || storeData === 'Consultant' ? 
+          <>
          {userLocation ?
          <>
          <h6>
@@ -315,6 +317,10 @@ return (
          :
          <></>
          }
+         </>
+         :
+         <></>
+        }
          {userData?.phone_number ?
           <>
           <h6> Phone Number: </h6>

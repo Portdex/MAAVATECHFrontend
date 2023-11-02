@@ -41,7 +41,7 @@ const Carousel = () => {
 	  const handleTagClick = (label) => {
 		// Save the clicked label in local storage
 		localStorage.setItem('category', label);
-		navigate(`/category/${label}`)
+		navigate(`/${label}`)
 	  };
 
   return (

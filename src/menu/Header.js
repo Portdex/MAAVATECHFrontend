@@ -9,22 +9,22 @@ function Header() {
 const navigate = useNavigate()
   const handleSchoolClick = () => {
     localStorage.setItem("category", "School");
-    navigate('/category/School');
+    navigate('/School');
     window.location.reload();
   };
   const handleUniversityClick = () => {
     localStorage.setItem("category", "University");
-    navigate('/category/University');
+    navigate('/University');
     window.location.reload();
   };
   const handleBookClick = () => {
     localStorage.setItem("category", "Book");
-    navigate('/category/Book');
+    navigate('/Book');
     window.location.reload();
   };
   const handleOrphanClick = () => {
     localStorage.setItem("category", "Orphan");
-    navigate('/category/Orphan');
+    navigate('/Orphan');
     window.location.reload();
   };
   const handlePostClick = async () => {
