@@ -27,6 +27,7 @@ const Headline = () => {
       });
   }, []);
   const handleReadMoreClick = (username) => {
+    localStorage.setItem('category' , 'Orphan')
     navigate(`/details/${username}`);
   }; 
       
