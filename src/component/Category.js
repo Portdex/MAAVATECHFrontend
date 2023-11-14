@@ -43,7 +43,29 @@ const Category= () => {
       setData(storedData);
     }
   }, []);
-  const countries = Country.getAllCountries();
+  const countries = [
+    {
+    name:"Australia",
+    isoCode: "AU"
+    },
+    {
+      name:"Pakistan",
+      isoCode: "PK"
+    },
+    {
+      name:"Saudi Arabia",
+      isoCode: "SA"
+    },
+    {
+      name:"United Arab Emirates",
+      isoCode: "AE"
+    },
+    {
+      name:"United Kingdom",
+      isoCode: "GB"
+    },
+];
+
   const getCitiesForSelectedCountry = (countryCode) => {
     const cities = City.getCitiesOfCountry(countryCode);
     return cities;
